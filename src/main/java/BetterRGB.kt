@@ -8,7 +8,7 @@ object BetterRGB {
 
         Logger.info("Starting up BetterRGB...")
 
-        WindowHandler.open()
+        WindowHandler.openWindow()
 
     }
 
