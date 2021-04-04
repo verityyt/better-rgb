@@ -24,8 +24,6 @@ object WindowHandler {
 
         frame = object : JFrame() {
             override fun paint(g: Graphics) {
-                val g2 = g as Graphics2D
-
                 /* Create virtual environment (BufferedImage) */
 
                 val bf = BufferedImage(1200, 750, BufferedImage.TYPE_INT_BGR)
@@ -34,27 +32,27 @@ object WindowHandler {
 
                 /* Set RenderingHints */
 
-                g.setRenderingHint(
+                graphics.setRenderingHint(
                     RenderingHints.KEY_RENDERING,
                     RenderingHints.VALUE_RENDER_QUALITY
                 )
-                g.setRenderingHint(
+                graphics.setRenderingHint(
                     RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON
                 )
-                g.setRenderingHint(
+                graphics.setRenderingHint(
                     RenderingHints.KEY_TEXT_ANTIALIASING,
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON
                 )
-                g.setRenderingHint(
+                graphics.setRenderingHint(
                     RenderingHints.KEY_STROKE_CONTROL,
                     RenderingHints.VALUE_STROKE_NORMALIZE
                 )
-                g.setRenderingHint(
+                graphics.setRenderingHint(
                     RenderingHints.KEY_INTERPOLATION,
                     RenderingHints.VALUE_INTERPOLATION_BILINEAR
                 )
-                g.setRenderingHint(
+                graphics.setRenderingHint(
                     RenderingHints.KEY_FRACTIONALMETRICS,
                     RenderingHints.VALUE_FRACTIONALMETRICS_ON
                 )
@@ -74,9 +72,9 @@ object WindowHandler {
                 drawSidebarItem(graphics2D, SidebarItem.UPDATES, this)
                 drawSidebarItem(graphics2D, SidebarItem.HELP, this)
 
-                g2.color = ColorPalette.foreground
-                g2.setOpacity(0.4f)
-                g2.fillRect(88, 0, 2, 750)
+                (g as Graphics2D).color = ColorPalette.foreground
+                g.setOpacity(0.4f)
+                g.fillRect(88, 0, 2, 750)
 
                 /* Draw BufferedImage */
 
@@ -98,8 +96,12 @@ object WindowHandler {
                     activeSidebarItem = SidebarItem.UPDATES
                 } else if (x in 21..69 && y in 545..585) {
                     activeSidebarItem = SidebarItem.HELP
-                } else if (screen != null) {
-                    activeSidebarItem = null
+                } else {
+                    activeSidebarItem = if(screen != null) {
+                        activeSidebarItem
+                    }else {
+                        null
+                    }
                 }
 
             }
@@ -117,7 +119,7 @@ object WindowHandler {
                     screen = SidebarItem.UPDATES.screen
                 } else if (x in 21..69 && y in 545..585) {
                     screen = SidebarItem.HELP.screen
-                } else if(x < 70){
+                } else if(x < 70) {
                     screen = null
                 }
             }
