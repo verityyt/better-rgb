@@ -16,7 +16,7 @@ object Logger {
     private const val green = "\u001B[32m"
 
     fun info(msg: String) {
-        println("$grey[${getFormattedTime()}]: [${cyan}INFO$grey] $reset$msg")
+        println("$grey[${getFormattedTime()}]: [${green}INFO$grey] $reset$msg")
     }
 
     fun warn(msg: String) {
@@ -28,7 +28,7 @@ object Logger {
     }
 
     fun debug(msg: String) {
-        println("$grey[${getFormattedTime()}]: [${green}DEBUG$grey] $reset$msg")
+        println("$grey[${getFormattedTime()}]: [${cyan}DEBUG$grey] $reset$msg")
     }
 
 

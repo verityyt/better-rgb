@@ -11,6 +11,8 @@ object CustomFont {
     var light: Font? = null
 
     fun registerFonts() {
+        Logger.debug("Registering fonts...")
+
         registerRegular()
         registerLight()
         registerBold()
