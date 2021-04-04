@@ -5,7 +5,7 @@ import java.util.*
 
 object Logger {
 
-    private var formattedTime = SimpleDateFormat("HH:mm:ss").format(Date())
+    private fun getFormattedTime() =  SimpleDateFormat("HH:mm:ss").format(Date())
 
     private val reset = "\u001B[0m"
     private val white = "\u001B[37m"
@@ -17,15 +17,15 @@ object Logger {
     private val orange = "\u001B[33m"
 
     fun info(msg: String) {
-        println("$grey[${formattedTime}]: [${cyan}INFO$grey] $reset$msg")
+        println("$grey[${getFormattedTime()}]: [${cyan}INFO$grey] $reset$msg")
     }
 
     fun warn(msg: String) {
-        println("$grey[${formattedTime}]: [${orange}WARN$grey] $reset$msg")
+        println("$grey[${getFormattedTime()}]: [${orange}WARN$grey] $reset$msg")
     }
 
     fun error(msg: String) {
-        println("$grey[${formattedTime}]: [${red}ERROR$grey] $red$msg")
+        println("$grey[${getFormattedTime()}]: [${red}ERROR$grey] $red$msg")
     }
 
 
