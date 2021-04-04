@@ -4,6 +4,8 @@ import utils.Logger
 import java.text.SimpleDateFormat
 import java.util.*
 
+import openrgb.OpenRGBManager
+
 object BetterRGB {
 
     var version = "0.1.2"
@@ -15,6 +17,8 @@ object BetterRGB {
 
         CustomFont.registerFonts()
         WindowHandler.openWindow()
+
+        OpenRGBManager.connect()
 
         Logger.info("Started up BetterRGB!")
     }
