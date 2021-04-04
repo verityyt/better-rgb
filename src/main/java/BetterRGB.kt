@@ -19,6 +19,7 @@ object BetterRGB {
         WindowHandler.openWindow()
 
         OpenRGBManager.connect()
+        OpenRGBManager.updateDevices()
 
         Logger.info("Started up BetterRGB!")
     }
