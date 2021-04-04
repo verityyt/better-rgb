@@ -16,7 +16,7 @@ object WindowHandler {
 
     private lateinit var frame: JFrame
 
-    var screen = HelpScreen()
+    var screen: Screen? = null
 
     var activeSidebarItem: SidebarItem? = SidebarItem.HELP
 
@@ -66,7 +66,7 @@ object WindowHandler {
 
                 /* Draw screen */
 
-                screen.paint(graphics, graphics2D, this)
+                screen?.paint(graphics, graphics2D, this)
 
                 /* Draw sidebar */
 
@@ -92,18 +92,46 @@ object WindowHandler {
                 val x = e.x
                 val y = e.y
 
-                activeSidebarItem = if (x in 21..69 && y in 156..224) {
-                    SidebarItem.DEVICES
+                if (x in 21..69 && y in 156..224) {
+                    activeSidebarItem = SidebarItem.DEVICES
                 } else if (x in 21..69 && y in 361..431) {
-                    SidebarItem.UPDATES
+                    activeSidebarItem = SidebarItem.UPDATES
                 } else if (x in 21..69 && y in 545..585) {
-                    SidebarItem.HELP
-                } else {
-                    null
+                    activeSidebarItem = SidebarItem.HELP
+                } else if (screen != null) {
+                    activeSidebarItem = null
                 }
 
             }
         })
+
+        frame.addMouseListener(object : java.awt.event.MouseListener {
+
+            override fun mouseClicked(e: MouseEvent) {
+                val x = e.x
+                val y = e.y
+
+                if (x in 21..69 && y in 156..224) {
+                    screen = SidebarItem.DEVICES.screen
+                } else if (x in 21..69 && y in 361..431) {
+                    screen = SidebarItem.UPDATES.screen
+                } else if (x in 21..69 && y in 545..585) {
+                    screen = SidebarItem.HELP.screen
+                } else if(x < 70){
+                    screen = null
+                }
+            }
+
+            override fun mousePressed(e: MouseEvent?) {}
+
+            override fun mouseReleased(e: MouseEvent?) {}
+
+            override fun mouseEntered(e: MouseEvent?) {}
+
+            override fun mouseExited(e: MouseEvent?) {}
+
+        })
+
         frame.addMouseListener(MouseListener())
         frame.addMouseMotionListener(MouseMotionListener())
 

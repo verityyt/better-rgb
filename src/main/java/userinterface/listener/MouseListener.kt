@@ -7,7 +7,7 @@ import java.awt.event.MouseListener
 class MouseListener : MouseListener {
 
     override fun mouseClicked(e: MouseEvent) {
-        WindowHandler.screen.mouseClicked(e.x - 5, e.y - 25)
+        WindowHandler.screen?.mouseClicked(e.x - 5, e.y - 25)
     }
 
     override fun mousePressed(e: MouseEvent) { }
