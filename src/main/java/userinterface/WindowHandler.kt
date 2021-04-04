@@ -3,7 +3,6 @@ package userinterface
 import setOpacity
 import userinterface.listener.MouseListener
 import userinterface.listener.MouseMotionListener
-import userinterface.screens.HelpScreen
 import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
@@ -18,7 +17,7 @@ object WindowHandler {
 
     var screen: Screen? = null
 
-    var activeSidebarItem: SidebarItem? = SidebarItem.HELP
+    var hoveredSidebarItem: SidebarItem? = SidebarItem.HELP
 
     fun openWindow() {
 
@@ -90,18 +89,14 @@ object WindowHandler {
                 val x = e.x
                 val y = e.y
 
-                if (x in 21..69 && y in 156..224) {
-                    activeSidebarItem = SidebarItem.DEVICES
+                hoveredSidebarItem = if (x in 21..69 && y in 156..224) {
+                    SidebarItem.DEVICES
                 } else if (x in 21..69 && y in 361..431) {
-                    activeSidebarItem = SidebarItem.UPDATES
+                    SidebarItem.UPDATES
                 } else if (x in 21..69 && y in 545..585) {
-                    activeSidebarItem = SidebarItem.HELP
+                    SidebarItem.HELP
                 } else {
-                    activeSidebarItem = if(screen != null) {
-                        activeSidebarItem
-                    }else {
-                        null
-                    }
+                    null
                 }
 
             }
@@ -116,12 +111,15 @@ object WindowHandler {
                 if (x in 21..69 && y in 156..224) {
                     screen = SidebarItem.DEVICES.screen
                 } else if (x in 21..69 && y in 361..431) {
-                    screen = SidebarItem.UPDATES.screen
+                    /*screen = SidebarItem.UPDATES.screen*/
                 } else if (x in 21..69 && y in 545..585) {
                     screen = SidebarItem.HELP.screen
-                } else if(x < 70) {
+                } else if (x < 70) {
                     screen = null
                 }
+
+                updateTitle()
+
             }
 
             override fun mousePressed(e: MouseEvent?) {}
@@ -160,9 +158,21 @@ object WindowHandler {
         frame.isVisible = true
     }
 
+    fun updateTitle() {
+        if (screen == null) {
+            frame.title = "BetterRGB"
+        } else {
+            for (item in SidebarItem.values()) {
+                if (screen == item.screen) {
+                    frame.title = "BetterRGB | ${item.displayName}"
+                }
+            }
+        }
+    }
+
     private fun drawSidebarItem(g2: Graphics2D, item: SidebarItem, observer: ImageObserver) {
         g2.setOpacity(
-            if (item == activeSidebarItem) {
+            if (item == hoveredSidebarItem) {
                 if (item.isAvailable) {
                     1.0f
                 } else {
@@ -171,7 +181,7 @@ object WindowHandler {
             } else {
                 if (!item.isAvailable) {
                     0.2f
-                } else if (activeSidebarItem == null) {
+                } else if (hoveredSidebarItem == null) {
                     0.4f
                 } else {
                     0.4f
