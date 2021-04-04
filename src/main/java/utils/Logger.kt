@@ -7,14 +7,12 @@ object Logger {
 
     private fun getFormattedTime() =  SimpleDateFormat("HH:mm:ss").format(Date())
 
-    private val reset = "\u001B[0m"
-    private val white = "\u001B[37m"
-    private val black = "\u001B[30m"
-    private val grey = "\u001B[90m"
+    private const val reset = "\u001B[0m"
+    private const val grey = "\u001B[90m"
 
-    private val cyan = "\u001B[36m"
-    private val red = "\u001B[31m"
-    private val orange = "\u001B[33m"
+    private const val cyan = "\u001B[36m"
+    private const val red = "\u001B[31m"
+    private const val orange = "\u001B[33m"
 
     fun info(msg: String) {
         println("$grey[${getFormattedTime()}]: [${cyan}INFO$grey] $reset$msg")
