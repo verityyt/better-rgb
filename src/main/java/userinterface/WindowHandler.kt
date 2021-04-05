@@ -1,5 +1,6 @@
 package userinterface
 
+import resetOpacity
 import setOpacity
 import userinterface.listener.MouseListener
 import userinterface.listener.MouseMotionListener
@@ -63,7 +64,14 @@ object WindowHandler {
 
                 /* Draw screen */
 
-                screen?.paint(graphics, graphics2D, this)
+                if(screen == null) {
+                    graphics2D.resetOpacity()
+                    graphics2D.color = ColorPalette.foreground
+                    graphics2D.font = CustomFont.bold?.deriveFont(48f)
+                    graphics2D.drawString("Home screen", 150, 150)
+                }else {
+                    screen?.paint(graphics, graphics2D, this)
+                }
 
                 /* Draw sidebar */
 
@@ -135,7 +143,7 @@ object WindowHandler {
         frame.addMouseListener(MouseListener())
         frame.addMouseMotionListener(MouseMotionListener())
 
-        frame.title = "BetterRGB"
+        frame.title = "BetterRGB | Home"
         frame.size = Dimension(1200, 750)
         frame.isResizable = false
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
@@ -160,7 +168,7 @@ object WindowHandler {
 
     fun updateTitle() {
         if (screen == null) {
-            frame.title = "BetterRGB"
+            frame.title = "BetterRGB | Home"
         } else {
             for (item in SidebarItem.values()) {
                 if (screen == item.screen) {
