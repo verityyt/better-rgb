@@ -79,12 +79,14 @@ object WindowHandler {
                 drawSidebarItem(graphics2D, SidebarItem.UPDATES, this)
                 drawSidebarItem(graphics2D, SidebarItem.HELP, this)
 
-                (g as Graphics2D).color = ColorPalette.foreground
-                g.setOpacity(0.4f)
-                g.fillRect(88, 0, 2, 750)
+                graphics2D.color = ColorPalette.foreground
+                graphics2D.setOpacity(0.4f)
+                graphics2D.fillRect(88, 0, 2, 750)
 
                 /* Draw BufferedImage */
 
+                g.color = ColorPalette.background
+                g.fillRect(0,0,1200,750)
                 g.drawImage(bf, 0, 0, 1200, 750, this)
 
             }
