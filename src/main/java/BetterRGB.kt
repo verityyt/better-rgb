@@ -16,7 +16,6 @@ object BetterRGB {
         Logger.debug("Starting up BetterRGB...")
 
         OpenRGBManager.connect()
-        OpenRGBManager.updateDevices()
 
         CustomFont.registerFonts()
         WindowHandler.openWindow()

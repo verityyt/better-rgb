@@ -29,6 +29,8 @@ object OpenRGBManager {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        updateDevices()
     }
 
     fun updateDevices() {
