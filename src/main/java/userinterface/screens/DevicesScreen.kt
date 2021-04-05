@@ -117,7 +117,7 @@ class DevicesScreen : Screen() {
         }
 
         for (button in deviceConfigurationButtons) {
-            if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 25) until (button.y)) {
+            if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 30) until (button.y)) {
                 if (WindowHandler.screen !is DeviceZoneScreen) {
                     WindowHandler.screen = DeviceZoneScreen(button.deviceName, button.deviceIndex)
                 }
