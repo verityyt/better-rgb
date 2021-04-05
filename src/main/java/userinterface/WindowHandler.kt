@@ -65,10 +65,11 @@ object WindowHandler {
                 /* Draw current/target screen */
 
                 if(screen == null) {
-                    graphics2D.resetOpacity()
-                    graphics2D.color = ColorPalette.foreground
-                    graphics2D.font = CustomFont.bold?.deriveFont(48f)
-                    graphics2D.drawString("Home screen", 150, 150)
+                    graphics.drawImage(ImageIO.read(File("files\\images\\logo\\logo_512.png")),480,175,256,256,this)
+
+                    graphics.color = ColorPalette.foreground
+                    graphics.font = CustomFont.bold?.deriveFont(48f)
+                    graphics.drawString("Welcome to BetterRGB", 380, 475)
                 }else {
                     screen?.paint(graphics, graphics2D, this)
                 }
