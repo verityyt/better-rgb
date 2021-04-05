@@ -16,30 +16,14 @@ class DevicesScreen : Screen() {
 
     private var buttonHovered = false
 
-    private var devices = HashMap<Int, String>()
-
-    init {
-        devices[0] = "MSI GeForce RTX 3070 8GB"
-        devices[1] = "Sony DualShock 4"
-        devices[2] = "MSI MYSTIC LIGHT"
-        devices[3] = "Logitech G502 Hero"
-        devices[4] = "Logitech G902 Orion Spectrum"
-        devices[5] = "Logitech G935 Wireless"
-        devices[6] = "Roccat Sense AIMO"
-        devices[7] = "Corsair Vengeance Pro RGB"
-        devices[8] = "Corsair Vengeance Pro RGB"
-        devices[9] = "Corsair Vengeance Pro RGB"
-        devices[10] = "Corsair Vengeance Pro RGB"
-    }
-
     private var drawDeviceY = 175
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
         if (OpenRGBManager.connected) {
 
-            for (deviceIndex in 0 until devices.size) {
-                var deviceName = devices[deviceIndex]!!
+            for (deviceIndex in 0 until OpenRGBManager.reveredDevices.size) {
+                var deviceName = OpenRGBManager.reveredDevices[deviceIndex]!!
 
                 if (deviceName.length > 25) {
                     deviceName = deviceName.substring(0, 23) + "..."

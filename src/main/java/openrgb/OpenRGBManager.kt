@@ -11,6 +11,7 @@ object OpenRGBManager {
     var connected: Boolean = false
 
     var devices = HashMap<String, Int>()
+    var reveredDevices = HashMap<Int, String>()
 
     fun connect() {
         Logger.debug("Trying to connect to OpenRGB...")
@@ -48,6 +49,7 @@ object OpenRGBManager {
                 }
 
                 devices[name] = index
+                reveredDevices[index] = name
             }
 
             Logger.info("Successfully updated OpenRGB devices!")
