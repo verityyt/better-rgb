@@ -46,4 +46,8 @@ class HelpScreen : Screen() {
 
     override fun mouseMoved(x: Int, y: Int) {}
 
+    override fun dragMouse(x: Int, y: Int) {}
+
+    override fun mousePressed(x: Int, y: Int) {}
+
 }

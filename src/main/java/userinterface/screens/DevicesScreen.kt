@@ -117,7 +117,7 @@ class DevicesScreen : Screen() {
         }
 
         for (button in deviceConfigurationButtons) {
-            if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 30) until (button.y)) {
+            if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 50) until (button.y)) {
                 if (WindowHandler.screen !is DeviceZoneScreen) {
                     WindowHandler.screen = DeviceZoneScreen(button.deviceName, button.deviceIndex)
                 }
@@ -128,6 +128,10 @@ class DevicesScreen : Screen() {
     override fun mouseMoved(x: Int, y: Int) {
         buttonHovered = (x in 549..689 && y in 349..404)
     }
+
+    override fun dragMouse(x: Int, y: Int) {}
+
+    override fun mousePressed(x: Int, y: Int) {}
 
 }
 
