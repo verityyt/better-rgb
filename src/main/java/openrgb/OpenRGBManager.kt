@@ -62,6 +62,8 @@ object OpenRGBManager {
     }
 
     fun getDeviceZoneNames(deviceIndex: Int): HashMap<Int, String> {
+        Logger.debug("Fetching zones of '${reveredDevices[deviceIndex]}#$deviceIndex'...")
+
         val device = client.getDeviceController(deviceIndex)
         val result = HashMap<Int, String>()
 
@@ -73,6 +75,8 @@ object OpenRGBManager {
             result[index] = name
             index++
         }
+
+        Logger.info("Successfully fetched zones of '${reveredDevices[0]}#$deviceIndex'!")
 
         return result
     }
