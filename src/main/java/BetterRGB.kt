@@ -15,11 +15,11 @@ object BetterRGB {
     fun main(args: Array<String>) {
         Logger.debug("Starting up BetterRGB...")
 
-        CustomFont.registerFonts()
-        WindowHandler.openWindow()
-
         OpenRGBManager.connect()
         OpenRGBManager.updateDevices()
+
+        CustomFont.registerFonts()
+        WindowHandler.openWindow()
 
         Logger.info("Started up BetterRGB!")
     }
