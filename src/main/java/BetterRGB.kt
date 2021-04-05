@@ -9,7 +9,7 @@ import openrgb.OpenRGBManager
 object BetterRGB {
 
     var version = "0.1.2"
-    var buildDate = SimpleDateFormat("MM/dd/YYYY").format(Date())
+    var buildDate = "/"
 
     @JvmStatic
     fun main(args: Array<String>) {
