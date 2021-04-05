@@ -146,6 +146,8 @@ object WindowHandler {
         frame.addMouseMotionListener(MouseMotionListener())
 
         frame.title = "BetterRGB | Home"
+        frame.iconImage = ImageIO.read(File("files\\images\\logo\\logo_favicon.png"))
+
         frame.size = Dimension(1200, 750)
         frame.isResizable = false
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
