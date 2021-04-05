@@ -9,14 +9,78 @@ import userinterface.Screen
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.image.ImageObserver
+import java.io.File
+import javax.imageio.ImageIO
 
 class DevicesScreen : Screen() {
 
     private var buttonHovered = false
 
+    private var devices = HashMap<Int, String>()
+
+    init {
+        devices[0] = "MSI GeForce RTX 3070 8GB"
+        devices[1] = "Sony DualShock 4"
+        devices[2] = "MSI MYSTIC LIGHT"
+        devices[3] = "Logitech G502 Hero"
+        devices[4] = "Logitech G902 Orion Spectrum"
+        devices[5] = "Logitech G935 Wireless"
+        devices[6] = "Roccat Sense AIMO"
+        devices[7] = "Corsair Vengeance Pro RGB"
+        devices[8] = "Corsair Vengeance Pro RGB"
+        devices[9] = "Corsair Vengeance Pro RGB"
+        devices[10] = "Corsair Vengeance Pro RGB"
+    }
+
+    private var drawDeviceY = 175
+
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
         if (OpenRGBManager.connected) {
+
+            for (deviceIndex in 0 until devices.size) {
+                var deviceName = devices[deviceIndex]!!
+
+                if (deviceName.length > 25) {
+                    deviceName = deviceName.substring(0, 23) + "..."
+                    deviceName = deviceName.substring(0, 23) + "..."
+                }
+
+                g.color = ColorPalette.foreground
+                g.font = CustomFont.regular?.deriveFont(24f)
+
+                g.drawString(
+                    deviceName, if (deviceIndex <= 8) {
+                        225
+                    } else {
+                        660
+                    }, drawDeviceY
+                )
+
+                g.fillRoundRect(
+                    if (deviceIndex <= 8) {
+                        560
+                    } else {
+                        990
+                    }, drawDeviceY - 25, 35, 35, 10, 10
+                )
+
+                g.drawImage(
+                    ImageIO.read(File("files\\images\\devices\\configure.png")), if (deviceIndex <= 8) {
+                        566
+                    } else {
+                        996
+                    }, drawDeviceY - 19, 24, 24, observer
+                )
+
+                if (deviceIndex == 8) {
+                    drawDeviceY = 175
+                } else {
+                    drawDeviceY += 50
+                }
+            }
+
+            drawDeviceY = 175
 
         } else {
 
@@ -30,11 +94,13 @@ class DevicesScreen : Screen() {
             /* Draw 'try again' button */
 
             g2.color = ColorPalette.foreground
-            g2.setOpacity(if(buttonHovered) {
-                0.4f
-            }else {
-                0.2f
-            })
+            g2.setOpacity(
+                if (buttonHovered) {
+                    0.4f
+                } else {
+                    0.2f
+                }
+            )
             g2.fillRect(550, 370, 140, 35)
             g2.resetOpacity()
 
@@ -46,7 +112,7 @@ class DevicesScreen : Screen() {
     }
 
     override fun mouseClicked(x: Int, y: Int) {
-        if(x in 549..689 && y in 349..404) {
+        if (x in 549..689 && y in 349..404) {
             Thread {
                 OpenRGBManager.connect()
             }.start()
