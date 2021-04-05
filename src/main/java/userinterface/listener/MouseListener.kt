@@ -8,9 +8,13 @@ class MouseListener : MouseListener {
 
     override fun mouseClicked(e: MouseEvent) {
         WindowHandler.screen?.mouseClicked(e.x - 5, e.y - 25)
+        WindowHandler.popup?.mouseClicked(e.x - 5, e.y - 25)
     }
 
-    override fun mousePressed(e: MouseEvent) { }
+    override fun mousePressed(e: MouseEvent) {
+        WindowHandler.screen?.mousePressed(e.x - 5, e.y - 25)
+        WindowHandler.popup?.mousePressed(e.x - 5, e.y - 25)
+    }
 
     override fun mouseReleased(e: MouseEvent) { }
 
