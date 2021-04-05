@@ -1,6 +1,7 @@
 package openrgb
 
 import io.gitlab.mguimard.openrgb.client.OpenRGBClient
+import io.gitlab.mguimard.openrgb.entity.OpenRGBColor
 import utils.Logger
 import java.lang.Exception
 import java.net.ConnectException
@@ -36,16 +37,16 @@ object OpenRGBManager {
     fun updateDevices() {
         Logger.debug("Updating OpenRGB devices...")
 
-        if(connected) {
-            for(index in 0 until client.controllerCount) {
+        if (connected) {
+            for (index in 0 until client.controllerCount) {
                 val device = client.getDeviceController(index)
                 var name = device.name
                 name = name.substring(0, name.length - 1)
 
                 while (true) {
-                    if(name.endsWith(" ")) {
+                    if (name.endsWith(" ")) {
                         name = name.substring(0, name.length - 1)
-                    }else {
+                    } else {
                         break
                     }
                 }
@@ -55,7 +56,7 @@ object OpenRGBManager {
             }
 
             Logger.info("Successfully updated OpenRGB devices!")
-        }else {
+        } else {
             Logger.warn("Skipped device updating, because client is not connected yet")
         }
     }
@@ -65,7 +66,7 @@ object OpenRGBManager {
         val result = HashMap<String, Int>()
 
         var index = 0
-        for(zone in device.zones) {
+        for (zone in device.zones) {
             var name = zone.name
             name = name.substring(0, name.length - 1)
 
@@ -74,6 +75,13 @@ object OpenRGBManager {
         }
 
         return result
+    }
+
+    fun updateZoneColor(deviceIndex: Int, zoneIndex: Int, colorHex: String) {
+        val colors = arrayOfNulls<OpenRGBColor>(client.getDeviceController(deviceIndex).zones[zoneIndex].ledsCount)
+        colors.fill(OpenRGBColor.fromHexaString(colorHex))
+
+        client.updateZoneLeds(deviceIndex, zoneIndex, colors)
     }
 
 }
