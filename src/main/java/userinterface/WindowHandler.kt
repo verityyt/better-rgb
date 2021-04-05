@@ -62,7 +62,7 @@ object WindowHandler {
                 graphics.color = ColorPalette.background
                 graphics.fillRect(0, 0, 1200, 750)
 
-                /* Draw screen */
+                /* Draw current/target screen */
 
                 if(screen == null) {
                     graphics2D.resetOpacity()
