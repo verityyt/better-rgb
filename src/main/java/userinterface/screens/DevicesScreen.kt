@@ -6,8 +6,10 @@ import setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Screen
+import userinterface.WindowHandler
 import java.awt.Graphics
 import java.awt.Graphics2D
+import java.awt.Window
 import java.awt.image.ImageObserver
 import java.io.File
 import javax.imageio.ImageIO
@@ -17,6 +19,8 @@ class DevicesScreen : Screen() {
     private var buttonHovered = false
 
     private var drawDeviceY = 175
+
+    private val deviceConfigurationButtons = mutableListOf<DeviceConfigurationButton>()
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
@@ -41,7 +45,7 @@ class DevicesScreen : Screen() {
                     }, drawDeviceY
                 )
 
-                g.fillRoundRect(
+                g2.fillRoundRect(
                     if (deviceIndex <= 8) {
                         560
                     } else {
@@ -55,6 +59,16 @@ class DevicesScreen : Screen() {
                     } else {
                         996
                     }, drawDeviceY - 19, 24, 24, observer
+                )
+
+                deviceConfigurationButtons.add(
+                    DeviceConfigurationButton(
+                        deviceName, deviceIndex, if (deviceIndex <= 8) {
+                            566
+                        } else {
+                            996
+                        }, drawDeviceY - 19
+                    )
                 )
 
                 if (deviceIndex == 8) {
@@ -101,6 +115,14 @@ class DevicesScreen : Screen() {
                 OpenRGBManager.connect()
             }.start()
         }
+
+        for (button in deviceConfigurationButtons) {
+            if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 25) until (button.y)) {
+                if (WindowHandler.screen !is DeviceZoneScreen) {
+                    WindowHandler.screen = DeviceZoneScreen(button.deviceName, button.deviceIndex)
+                }
+            }
+        }
     }
 
     override fun mouseMoved(x: Int, y: Int) {
@@ -108,3 +130,5 @@ class DevicesScreen : Screen() {
     }
 
 }
+
+class DeviceConfigurationButton(val deviceName: String, val deviceIndex: Int, val x: Int, val y: Int)
