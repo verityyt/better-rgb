@@ -61,16 +61,16 @@ object OpenRGBManager {
         }
     }
 
-    fun getDeviceZoneNames(deviceIndex: Int): HashMap<String, Int> {
+    fun getDeviceZoneNames(deviceIndex: Int): HashMap<Int, String> {
         val device = client.getDeviceController(deviceIndex)
-        val result = HashMap<String, Int>()
+        val result = HashMap<Int, String>()
 
         var index = 0
         for (zone in device.zones) {
             var name = zone.name
             name = name.substring(0, name.length - 1)
 
-            result[name] = index
+            result[index] = name
             index++
         }
 
