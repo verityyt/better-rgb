@@ -4,6 +4,7 @@ import resetOpacity
 import setOpacity
 import userinterface.listener.MouseListener
 import userinterface.listener.MouseMotionListener
+import userinterface.popups.ColorPickerPopup
 import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
@@ -17,6 +18,7 @@ object WindowHandler {
     private lateinit var frame: JFrame
 
     var screen: Screen? = null
+    var popup: Popup? = null
 
     var hoveredSidebarItem: SidebarItem? = SidebarItem.HELP
 
@@ -64,15 +66,24 @@ object WindowHandler {
 
                 /* Draw current/target screen */
 
-                if(screen == null) {
-                    graphics.drawImage(ImageIO.read(File("files\\images\\logo\\logo_512.png")),480,175,256,256,this)
+                if (screen == null) {
+                    graphics.drawImage(
+                        ImageIO.read(File("files\\images\\logo\\logo_512.png")),
+                        480,
+                        175,
+                        256,
+                        256,
+                        this
+                    )
 
                     graphics.color = ColorPalette.foreground
                     graphics.font = CustomFont.bold?.deriveFont(48f)
                     graphics.drawString("Welcome to BetterRGB", 380, 475)
-                }else {
+                } else {
                     screen?.paint(graphics, graphics2D, this)
                 }
+
+                popup?.paint(graphics, graphics2D, this)
 
                 /* Draw sidebar */
 
@@ -87,7 +98,7 @@ object WindowHandler {
                 /* Draw BufferedImage */
 
                 g.color = ColorPalette.background
-                g.fillRect(0,0,1200,750)
+                g.fillRect(0, 0, 1200, 750)
                 g.drawImage(bf, 0, 0, 1200, 750, this)
 
             }
