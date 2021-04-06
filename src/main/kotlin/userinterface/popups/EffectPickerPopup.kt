@@ -30,9 +30,9 @@ class EffectPickerPopup(
     private var hoveredCancel = false
     override var open = true
 
-    var needSecondaryColor = false
-
     private var effect: EffectsEnum = oldEffect
+
+    private var needSecondaryColor = (effect == EffectsEnum.STATIC || effect == EffectsEnum.COLOR_GRADIENT)
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
