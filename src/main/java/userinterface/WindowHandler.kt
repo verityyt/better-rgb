@@ -78,7 +78,7 @@ object WindowHandler {
 
                     graphics.color = ColorPalette.foreground
                     graphics.font = CustomFont.bold?.deriveFont(48f)
-                    graphics.drawString("Welcome to BetterRGB", 380, 475)
+                    graphics.drawString("Welcome to BetterRGB", 370, 475)
                 } else {
                     screen?.paint(graphics, graphics2D, this)
                 }
