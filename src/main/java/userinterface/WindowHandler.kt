@@ -19,6 +19,11 @@ object WindowHandler {
 
     var screen: Screen? = null
     var popup: Popup? = null
+        set(value) {
+            if (field == null || !field!!.open) {
+                field = value
+            }
+        }
 
     var hoveredSidebarItem: SidebarItem? = SidebarItem.HELP
 
