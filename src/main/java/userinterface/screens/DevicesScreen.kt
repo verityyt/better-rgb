@@ -9,7 +9,6 @@ import userinterface.Screen
 import userinterface.WindowHandler
 import java.awt.Graphics
 import java.awt.Graphics2D
-import java.awt.Window
 import java.awt.image.ImageObserver
 import java.io.File
 import javax.imageio.ImageIO
@@ -26,8 +25,8 @@ class DevicesScreen : Screen() {
 
         if (OpenRGBManager.connected) {
 
-            for (deviceIndex in 0 until OpenRGBManager.reveredDevices.size) {
-                var deviceName = OpenRGBManager.reveredDevices[deviceIndex]!!
+            for (deviceIndex in 0 until OpenRGBManager.devicesByIndex.size) {
+                var deviceName = OpenRGBManager.devicesByIndex[deviceIndex]!!
 
                 if (deviceName.length > 25) {
                     deviceName = deviceName.substring(0, 23) + "..."

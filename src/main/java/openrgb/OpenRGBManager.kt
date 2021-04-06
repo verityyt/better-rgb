@@ -11,8 +11,8 @@ object OpenRGBManager {
     lateinit var client: OpenRGBClient
     var connected: Boolean = false
 
-    var devices = HashMap<String, Int>()
-    var reveredDevices = HashMap<Int, String>()
+    var devicesByName = HashMap<String, Int>()
+    var devicesByIndex = HashMap<Int, String>()
 
     fun connect() {
         Logger.debug("Trying to connect to OpenRGB...")
@@ -51,8 +51,8 @@ object OpenRGBManager {
                     }
                 }
 
-                devices[name] = index
-                reveredDevices[index] = name
+                devicesByName[name] = index
+                devicesByIndex[index] = name
             }
 
             Logger.info("Successfully updated OpenRGB devices!")
@@ -62,7 +62,7 @@ object OpenRGBManager {
     }
 
     fun getDeviceZoneNames(deviceIndex: Int): HashMap<Int, String> {
-        Logger.debug("Fetching zones of '${reveredDevices[deviceIndex]}#$deviceIndex'...")
+        Logger.debug("Fetching zones of '${devicesByIndex[deviceIndex]}#$deviceIndex'...")
 
         val device = client.getDeviceController(deviceIndex)
         val result = HashMap<Int, String>()
@@ -76,7 +76,7 @@ object OpenRGBManager {
             index++
         }
 
-        Logger.info("Successfully fetched zones of '${reveredDevices[0]}#$deviceIndex'!")
+        Logger.info("Successfully fetched zones of '${devicesByIndex[0]}#$deviceIndex'!")
 
         return result
     }
