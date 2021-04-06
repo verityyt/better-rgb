@@ -1,6 +1,8 @@
 package userinterface.screens
 
 import openrgb.OpenRGBManager
+import openrgb.effects.RainbowEffect
+import openrgb.effects.StaticEffect
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Screen
@@ -114,7 +116,7 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
                         OpenRGBManager.updateZoneColor(
                             deviceIndex,
                             button.zoneIndex,
-                            String.format("#%02x%02x%02x", red, green, blue)
+                            StaticEffect(String.format("#%02x%02x%02x", red, green, blue))
                         )
 
                         button.colorHex = String.format("#%02x%02x%02x", red, green, blue)

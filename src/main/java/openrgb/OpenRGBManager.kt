@@ -16,6 +16,8 @@ object OpenRGBManager {
     var deviceByIndex = HashMap<Int, String>()
     var deviceZoneScreens = HashMap<Int, DeviceZoneScreen>()
 
+    var deviceEffects = HashMap<Int, HashMap<Int, Thread>>()
+
     fun connect() {
         Logger.debug("Trying to connect to OpenRGB...")
 
@@ -85,11 +87,54 @@ object OpenRGBManager {
         return result
     }
 
-    fun updateZoneColor(deviceIndex: Int, zoneIndex: Int, colorHex: String) {
-        val colors = arrayOfNulls<OpenRGBColor>(client.getDeviceController(deviceIndex).zones[zoneIndex].ledsCount)
-        colors.fill(OpenRGBColor.fromHexaString(colorHex))
+    fun updateZoneColor(deviceIndex: Int, zoneIndex: Int, effect: Effect) {
 
-        client.updateZoneLeds(deviceIndex, zoneIndex, colors)
+        if (deviceEffects.containsKey(deviceIndex)) {
+            val zoneThreads = deviceEffects[deviceIndex] as HashMap<Int, Thread>
+
+            if (zoneThreads.containsKey(zoneIndex)) {
+                zoneThreads[zoneIndex]?.stop()
+                zoneThreads.remove(zoneIndex)
+            }
+
+            deviceEffects[deviceIndex] = zoneThreads
+        }
+
+
+        effect.start()
+
+        if (effect.animation) {
+            val thread = Thread {
+                while (true) {
+                    Thread.sleep((1000 / effect.fps).toLong())
+
+                    val colors =
+                        arrayOfNulls<OpenRGBColor>(client.getDeviceController(deviceIndex).zones[zoneIndex].ledsCount)
+                    colors.fill(OpenRGBColor.fromHexaString(effect.colorHex))
+
+                    client.updateZoneLeds(deviceIndex, zoneIndex, colors)
+                }
+            }
+
+            if (deviceEffects.containsKey(deviceIndex)) {
+                val zoneThreads = deviceEffects[deviceIndex] as HashMap<Int, Thread>
+                zoneThreads[zoneIndex] = thread
+
+                deviceEffects[deviceIndex] = zoneThreads
+            } else {
+                val zoneThreads = HashMap<Int, Thread>()
+                zoneThreads[zoneIndex] = thread
+
+                deviceEffects[deviceIndex] = zoneThreads
+            }
+
+            thread.start()
+        } else {
+            val colors = arrayOfNulls<OpenRGBColor>(client.getDeviceController(deviceIndex).zones[zoneIndex].ledsCount)
+            colors.fill(OpenRGBColor.fromHexaString(effect.colorHex))
+
+            client.updateZoneLeds(deviceIndex, zoneIndex, colors)
+        }
     }
 
 }
