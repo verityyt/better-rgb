@@ -85,7 +85,7 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
                     560
                 } else {
                     990
-                }, drawZoneY - 25, 30, 30, 10, 10
+                }, drawZoneY - 24, 29, 29, 10, 10
             )
 
             g.color = ColorPalette.foreground
