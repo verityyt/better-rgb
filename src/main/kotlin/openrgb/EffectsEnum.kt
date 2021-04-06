@@ -1,9 +1,9 @@
 package openrgb
 
-enum class EffectsEnum {
+enum class EffectsEnum(val needPrimary: Boolean) {
 
-    STATIC,
-    COLOR_GRADIENT,
-    RAINBOW_WAVE
+    STATIC(true),
+    COLOR_GRADIENT(true),
+    RAINBOW_WAVE(false)
 
 }
