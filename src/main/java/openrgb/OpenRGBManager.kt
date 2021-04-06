@@ -2,6 +2,7 @@ package openrgb
 
 import io.gitlab.mguimard.openrgb.client.OpenRGBClient
 import io.gitlab.mguimard.openrgb.entity.OpenRGBColor
+import userinterface.screens.DeviceZoneScreen
 import utils.Logger
 import java.lang.Exception
 import java.net.ConnectException
@@ -13,6 +14,7 @@ object OpenRGBManager {
 
     var devicesByName = HashMap<String, Int>()
     var devicesByIndex = HashMap<Int, String>()
+    var deviceZoneScreens = HashMap<Int, DeviceZoneScreen>()
 
     fun connect() {
         Logger.debug("Trying to connect to OpenRGB...")
@@ -53,6 +55,8 @@ object OpenRGBManager {
 
                 devicesByName[name] = index
                 devicesByIndex[index] = name
+
+                deviceZoneScreens[index] = DeviceZoneScreen(name, index)
             }
 
             Logger.info("Successfully updated OpenRGB devices!")

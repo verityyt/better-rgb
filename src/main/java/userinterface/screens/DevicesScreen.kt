@@ -118,7 +118,7 @@ class DevicesScreen : Screen() {
         for (button in deviceConfigurationButtons) {
             if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 50) until (button.y)) {
                 if (WindowHandler.screen !is DeviceZoneScreen) {
-                    WindowHandler.screen = DeviceZoneScreen(button.deviceName, button.deviceIndex)
+                    WindowHandler.screen = OpenRGBManager.deviceZoneScreens[button.deviceIndex]
                 }
             }
         }
