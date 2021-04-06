@@ -6,6 +6,8 @@ import java.awt.image.ImageObserver
 
 abstract class Popup {
 
+    abstract var open: Boolean
+
     abstract fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver)
 
     abstract fun mouseClicked(x: Int, y: Int)

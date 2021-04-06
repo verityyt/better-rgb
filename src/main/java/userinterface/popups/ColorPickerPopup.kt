@@ -25,7 +25,7 @@ class ColorPickerPopup(
 
     private var hoveredApply = false
     private var hoveredCancel = false
-    private var open = true
+    override var open = true
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
