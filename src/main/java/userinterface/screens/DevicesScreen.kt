@@ -25,8 +25,8 @@ class DevicesScreen : Screen() {
 
         if (OpenRGBManager.connected) {
 
-            for (deviceIndex in 0 until OpenRGBManager.devicesByIndex.size) {
-                var deviceName = OpenRGBManager.devicesByIndex[deviceIndex]!!
+            for (deviceIndex in 0 until OpenRGBManager.deviceByIndex.size) {
+                var deviceName = OpenRGBManager.deviceByIndex[deviceIndex]!!
 
                 if (deviceName.length > 25) {
                     deviceName = deviceName.substring(0, 23) + "..."
