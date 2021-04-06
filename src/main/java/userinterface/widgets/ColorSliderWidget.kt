@@ -15,21 +15,17 @@ class ColorSliderWidget(
     private val y: Int,
     private val color: Color,
     private val label: String,
-    private val oldValue: Int = 1
+    private val oldValue: Int = 0
 ) :
     Widget() {
 
-    private var dotX = 1
-    var value = 1
+    private var dotX = 0
+    var value = 0
     private var dragging = false
 
     init {
         value = oldValue
-        dotX = if(value == 1) {
-            1
-        }else {
-            value * 2
-        }
+        dotX = value * 2
     }
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
@@ -53,11 +49,7 @@ class ColorSliderWidget(
             }, y + 22
         )
 
-        value = if (dotX == 1) {
-            1
-        } else {
-            dotX / 2
-        }
+        value = dotX / 2
         g.drawString(value.toString(), x + 510 + 25, y + 22)
 
     }
@@ -71,7 +63,7 @@ class ColorSliderWidget(
     override fun dragMouse(x: Int, y: Int) {
         if (dragging) {
             val target = x - this.x
-            if (target <= (255 * 2) && target > 1) {
+            if (target <= (255 * 2) && target > 0) {
                 dotX = target
             }
         }

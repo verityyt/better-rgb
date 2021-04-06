@@ -12,9 +12,9 @@ import java.awt.image.ImageObserver
 
 class ColorPickerPopup(
     val exec: (red: Int, green: Int, blue: Int) -> Unit,
-    private val oldRed: Int = 1,
-    private val oldGreen: Int = 1,
-    private val oldBlue: Int = 1
+    private val oldRed: Int = 0,
+    private val oldGreen: Int = 0,
+    private val oldBlue: Int = 0
 ) : Popup() {
 
     private var redSlider = ColorSliderWidget(415, 275, Color.red, "R", oldRed)

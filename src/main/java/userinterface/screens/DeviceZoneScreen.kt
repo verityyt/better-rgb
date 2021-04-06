@@ -120,19 +120,7 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
                         button.colorHex = String.format("#%02x%02x%02x", red, green, blue)
 
                         WindowHandler.popup = null
-                    }, if (color.red == 0) {
-                        1
-                    } else {
-                        color.red
-                    }, if (color.green == 0) {
-                        1
-                    } else {
-                        color.green
-                    }, if (color.blue == 0) {
-                        1
-                    } else {
-                        color.blue
-                    }
+                    }, color.red, color.green, color.blue
                 )
             }
         }
