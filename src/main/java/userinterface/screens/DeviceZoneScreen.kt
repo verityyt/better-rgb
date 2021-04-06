@@ -1,5 +1,6 @@
 package userinterface.screens
 
+import openrgb.EffectsEnum
 import openrgb.OpenRGBManager
 import openrgb.effects.RainbowEffect
 import openrgb.effects.StaticEffect
@@ -21,6 +22,8 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
     private var deviceZones: HashMap<Int, String> = OpenRGBManager.getDeviceZoneNames(deviceIndex)
 
     private val zoneColorButton = HashMap<Int, ZoneConfigurationButton>()
+
+    private val zoneEffects = HashMap<Int, EffectsEnum>()
 
     private var drawZoneY = 175
 
@@ -143,22 +146,79 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
                 WindowHandler.popup = ColorPickerPopup(
                     { red: Int, green: Int, blue: Int ->
 
-                        OpenRGBManager.updateZoneColor(
-                            deviceIndex,
-                            button.zoneIndex,
-                            StaticEffect(String.format("#%02x%02x%02x", red, green, blue))
-                        )
+                        if (zoneEffects.containsKey(button.zoneIndex)) {
 
-                        button.colorHex = String.format("#%02x%02x%02x", red, green, blue)
+                            val effect = zoneEffects[button.zoneIndex]
+
+                            when (effect) {
+                                EffectsEnum.STATIC -> {
+
+                                    val colorHex = String.format("#%02x%02x%02x", red, green, blue)
+
+                                    OpenRGBManager.updateZoneColor(
+                                        deviceIndex,
+                                        button.zoneIndex,
+                                        StaticEffect(colorHex)
+                                    )
+
+                                    button.colorHex = colorHex
+                                }
+                                EffectsEnum.COLOR_GRADIENT -> {
+                                    // not implemented yet
+                                }
+                                EffectsEnum.RAINBOW_WAVE -> {
+                                    OpenRGBManager.updateZoneColor(
+                                        deviceIndex,
+                                        button.zoneIndex,
+                                        RainbowEffect(60)
+                                    )
+                                }
+                            }
+
+                        } else {
+                            var colorHex = String.format("#%02x%02x%02x", red, green, blue)
+
+                            OpenRGBManager.updateZoneColor(
+                                deviceIndex,
+                                button.zoneIndex,
+                                StaticEffect(colorHex)
+                            )
+
+                            button.colorHex = colorHex
+                        }
 
                         WindowHandler.popup = null
                     }, color.red, color.green, color.blue
                 )
             } else if (x in (button.x + 53) until (button.x + 153) && y in (button.y - 50) until (button.y)) {
                 WindowHandler.popup = EffectPickerPopup(
-                    { red: Int, green: Int, blue: Int ->
-                        println("Selected secondary color is ${String.format("#%02x%02x%02x", red, green, blue)}")
-                    }, 0, 0, 0
+                    { red: Int, green: Int, blue: Int, effect: EffectsEnum ->
+                        zoneEffects[button.zoneIndex] = effect
+
+                        when (effect) {
+                            EffectsEnum.STATIC -> {
+                                val colorHex = zoneColorButton[button.zoneIndex]!!.colorHex
+
+                                OpenRGBManager.updateZoneColor(
+                                    deviceIndex,
+                                    button.zoneIndex,
+                                    StaticEffect(colorHex)
+                                )
+
+                                button.colorHex = colorHex
+                            }
+                            EffectsEnum.COLOR_GRADIENT -> {
+                                // not implemented yet
+                            }
+                            EffectsEnum.RAINBOW_WAVE -> {
+                                OpenRGBManager.updateZoneColor(
+                                    deviceIndex,
+                                    button.zoneIndex,
+                                    RainbowEffect(60)
+                                )
+                            }
+                        }
+                    }, zoneEffects[button.zoneIndex] ?: EffectsEnum.STATIC, 0, 0, 0
                 )
             }
         }

@@ -13,7 +13,8 @@ import java.awt.Graphics2D
 import java.awt.image.ImageObserver
 
 class EffectPickerPopup(
-    val exec: (red: Int, green: Int, blue: Int) -> Unit,
+    val exec: (red: Int, green: Int, blue: Int, effect: EffectsEnum) -> Unit,
+    private val oldEffect: EffectsEnum = EffectsEnum.STATIC,
     private val oldRed: Int = 0,
     private val oldGreen: Int = 0,
     private val oldBlue: Int = 0
@@ -31,7 +32,7 @@ class EffectPickerPopup(
 
     var needSecondaryColor = false
 
-    private var effect: EffectsEnum = EffectsEnum.STATIC
+    private var effect: EffectsEnum = oldEffect
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
@@ -189,7 +190,7 @@ class EffectPickerPopup(
         }
 
         if (x in 979..1039 && y in 239..284) {
-            exec(redSlider.value, greenSlider.value, blueSlider.value)
+            exec(redSlider.value, greenSlider.value, blueSlider.value, effect)
             open = false
         } else if (x in 969..1044 && y in 379..484) {
             open = false
