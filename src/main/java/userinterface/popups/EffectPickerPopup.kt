@@ -103,76 +103,76 @@ class EffectPickerPopup(
             when (effect) {
                 EffectsEnum.STATIC -> {
                     g2.resetOpacity()
-                    g2.color = ColorPalette.background
+                    g2.color = ColorPalette.foreground
                     g2.fillRoundRect(220, 400, 75, 35, 10, 10)
 
-                    g.color = ColorPalette.foreground
+                    g.color = ColorPalette.background
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Static", 225, 426)
 
                     g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
+                    g2.color = ColorPalette.background
                     g2.fillRoundRect(220 + 100, 400, 170, 35, 10, 10)
 
-                    g.color = ColorPalette.background
+                    g.color = ColorPalette.foreground
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Color Gradient", 225 + 100, 426)
 
                     g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
+                    g2.color = ColorPalette.background
                     g2.fillRoundRect(320 + 190, 400, 170, 35, 10, 10)
 
-                    g.color = ColorPalette.background
+                    g.color = ColorPalette.foreground
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Rainbow Wave", 325 + 190, 426)
                 }
                 EffectsEnum.COLOR_GRADIENT -> {
                     g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
+                    g2.color = ColorPalette.background
                     g2.fillRoundRect(220, 400, 75, 35, 10, 10)
 
-                    g.color = ColorPalette.background
+                    g.color = ColorPalette.foreground
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Static", 225, 426)
 
                     g2.resetOpacity()
-                    g2.color = ColorPalette.background
+                    g2.color = ColorPalette.foreground
                     g2.fillRoundRect(220 + 100, 400, 170, 35, 10, 10)
 
-                    g.color = ColorPalette.foreground
+                    g.color = ColorPalette.background
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Color Gradient", 225 + 100, 426)
 
                     g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
+                    g2.color = ColorPalette.background
                     g2.fillRoundRect(320 + 190, 400, 170, 35, 10, 10)
 
-                    g.color = ColorPalette.background
+                    g.color = ColorPalette.foreground
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Rainbow Wave", 325 + 190, 426)
                 }
                 EffectsEnum.RAINBOW_WAVE -> {
                     g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
+                    g2.color = ColorPalette.background
                     g2.fillRoundRect(220, 400, 75, 35, 10, 10)
 
-                    g.color = ColorPalette.background
+                    g.color = ColorPalette.foreground
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Static", 225, 426)
 
                     g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
+                    g2.color = ColorPalette.background
                     g2.fillRoundRect(220 + 100, 400, 170, 35, 10, 10)
 
-                    g.color = ColorPalette.background
+                    g.color = ColorPalette.foreground
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Color Gradient", 225 + 100, 426)
 
                     g2.resetOpacity()
-                    g2.color = ColorPalette.background
+                    g2.color = ColorPalette.foreground
                     g2.fillRoundRect(320 + 190, 400, 170, 35, 10, 10)
 
-                    g.color = ColorPalette.foreground
+                    g.color = ColorPalette.background
                     g.font = CustomFont.regular?.deriveFont(24f)
                     g.drawString("Rainbow Wave", 325 + 190, 426)
                 }
