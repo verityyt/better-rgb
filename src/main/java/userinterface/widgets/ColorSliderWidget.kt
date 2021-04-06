@@ -28,14 +28,26 @@ class ColorSliderWidget(
         dotX = value * 2
     }
 
+    var available = true
+
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
+        if(!available) {
+            g2.setOpacity(0.4f)
+        }else {
+            g2.resetOpacity()
+        }
+
         g2.color = ColorPalette.foreground
-        g2.setOpacity(0.6f)
+        if (available) {
+            g2.setOpacity(0.6f)
+        }
 
         g2.fillRoundRect(x, y + 10, 510 + 19, 5, 5, 5)
         g2.fillOval(x + dotX, y + 4, 19, 19)
-        g2.resetOpacity()
+        if (available) {
+            g2.resetOpacity()
+        }
 
         g2.color = color
         g2.fillOval(x + dotX + 2, y + 6, 15, 15)
