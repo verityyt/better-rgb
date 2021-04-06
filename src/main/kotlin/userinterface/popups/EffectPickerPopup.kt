@@ -1,8 +1,8 @@
 package userinterface.popups
 
 import openrgb.EffectsEnum
-import resetOpacity
-import setOpacity
+import utils.resetOpacity
+import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Popup
@@ -14,10 +14,10 @@ import java.awt.image.ImageObserver
 
 class EffectPickerPopup(
     val exec: (red: Int, green: Int, blue: Int, effect: EffectsEnum) -> Unit,
-    private val oldEffect: EffectsEnum = EffectsEnum.STATIC,
-    private val oldRed: Int = 0,
-    private val oldGreen: Int = 0,
-    private val oldBlue: Int = 0
+    oldEffect: EffectsEnum = EffectsEnum.STATIC,
+    oldRed: Int = 0,
+    oldGreen: Int = 0,
+    oldBlue: Int = 0
 ) : Popup() {
 
     private var redSlider = ColorSliderWidget(385, 275, Color.red, "R", oldRed)

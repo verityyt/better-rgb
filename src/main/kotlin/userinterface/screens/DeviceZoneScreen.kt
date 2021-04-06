@@ -6,8 +6,8 @@ import openrgb.OpenRGBManager
 import openrgb.effects.GradientEffect
 import openrgb.effects.RainbowEffect
 import openrgb.effects.StaticEffect
-import resetOpacity
-import setOpacity
+import utils.resetOpacity
+import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Screen
@@ -21,7 +21,7 @@ import java.awt.image.ImageObserver
 import java.io.File
 import javax.imageio.ImageIO
 
-class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() {
+class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: Int) : Screen() {
 
     private var deviceZones: HashMap<Int, String> = OpenRGBManager.getDeviceZoneNames(deviceIndex)
 
@@ -43,7 +43,7 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
             }
 
             zoneColorButton[zoneIndex] = ZoneConfigurationButton(
-                zoneName, zoneIndex, if (zoneIndex <= 8) {
+                zoneIndex, if (zoneIndex <= 8) {
                     566 - 125
                 } else {
                     996 - 125
@@ -300,9 +300,7 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
 
                 if (zoneEffects.containsKey(button.zoneIndex)) {
 
-                    val effect = zoneEffects[button.zoneIndex]
-
-                    when (effect) {
+                    when (zoneEffects[button.zoneIndex]) {
                         EffectsEnum.STATIC -> {
 
                             val colorHex = String.format("#%02x%02x%02x", red, green, blue)
@@ -358,7 +356,7 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
                     }
 
                 } else {
-                    var colorHex = String.format("#%02x%02x%02x", red, green, blue)
+                    val colorHex = String.format("#%02x%02x%02x", red, green, blue)
 
                     OpenRGBManager.updateZoneColor(
                         deviceIndex,
@@ -378,7 +376,6 @@ class DeviceZoneScreen(val deviceName: String, val deviceIndex: Int) : Screen() 
 }
 
 class ZoneConfigurationButton(
-    val zoneName: String,
     val zoneIndex: Int,
     val x: Int,
     val y: Int,

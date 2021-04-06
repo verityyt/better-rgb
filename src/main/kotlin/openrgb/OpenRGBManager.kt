@@ -9,14 +9,14 @@ import java.net.ConnectException
 
 object OpenRGBManager {
 
-    lateinit var client: OpenRGBClient
+    private lateinit var client: OpenRGBClient
     var connected: Boolean = false
 
     var deviceByName = HashMap<String, Int>()
     var deviceByIndex = HashMap<Int, String>()
     var deviceZoneScreens = HashMap<Int, DeviceZoneScreen>()
 
-    var deviceEffects = HashMap<Int, HashMap<Int, Thread>>()
+    private var deviceEffects = HashMap<Int, HashMap<Int, Thread>>()
 
     fun connect() {
         Logger.debug("Trying to connect to OpenRGB...")

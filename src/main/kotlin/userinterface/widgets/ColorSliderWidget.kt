@@ -1,7 +1,7 @@
 package userinterface.widgets
 
-import resetOpacity
-import setOpacity
+import utils.resetOpacity
+import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Widget
@@ -15,7 +15,7 @@ class ColorSliderWidget(
     private val y: Int,
     private val color: Color,
     private val label: String,
-    private val oldValue: Int = 0
+    oldValue: Int = 0
 ) :
     Widget() {
 

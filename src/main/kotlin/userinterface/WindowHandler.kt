@@ -1,6 +1,6 @@
 package userinterface
 
-import setOpacity
+import utils.setOpacity
 import userinterface.listener.MouseListener
 import userinterface.listener.MouseMotionListener
 import java.awt.*
@@ -175,14 +175,6 @@ object WindowHandler {
             }
         }.start()
 
-    }
-
-    fun hideWindow() {
-        frame.isVisible = false
-    }
-
-    fun showWindow() {
-        frame.isVisible = true
     }
 
     fun updateTitle() {

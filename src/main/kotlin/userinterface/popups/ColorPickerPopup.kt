@@ -1,6 +1,6 @@
 package userinterface.popups
 
-import setOpacity
+import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Popup

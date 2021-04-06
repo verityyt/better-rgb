@@ -5,7 +5,7 @@ import java.awt.Color
 
 class GradientEffect(override val fps: Int, startHex: String, endHex: String) : Effect() {
 
-    var startColor = Color.decode(startHex)
+    private var startColor = Color.decode(startHex)
     var endColor = Color.decode(endHex)
 
     var originalStartColor = Color.white

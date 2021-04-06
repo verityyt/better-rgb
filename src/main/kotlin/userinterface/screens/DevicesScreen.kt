@@ -1,8 +1,8 @@
 package userinterface.screens
 
 import openrgb.OpenRGBManager
-import resetOpacity
-import setOpacity
+import utils.resetOpacity
+import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Screen
@@ -62,7 +62,7 @@ class DevicesScreen : Screen() {
 
                 deviceConfigurationButtons.add(
                     DeviceConfigurationButton(
-                        deviceName, deviceIndex, if (deviceIndex <= 8) {
+                        deviceIndex, if (deviceIndex <= 8) {
                             566
                         } else {
                             996
@@ -134,4 +134,4 @@ class DevicesScreen : Screen() {
 
 }
 
-class DeviceConfigurationButton(val deviceName: String, val deviceIndex: Int, val x: Int, val y: Int)
+class DeviceConfigurationButton(val deviceIndex: Int, val x: Int, val y: Int)
