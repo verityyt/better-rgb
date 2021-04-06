@@ -1,7 +1,6 @@
 package openrgb.effects
 
 import openrgb.Effect
-import openrgb.OpenRGBManager
 import java.awt.Color
 
 class RainbowEffect(override val fps: Int) : Effect("Static") {

@@ -16,6 +16,6 @@ open class Effect(val name: String) {
 
     open fun join() = thread.join()
 
-    open fun stop() = thread.stop()
+    open fun stop() = thread.interrupt()
 
 }

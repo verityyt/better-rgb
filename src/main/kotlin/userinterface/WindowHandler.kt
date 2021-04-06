@@ -1,10 +1,8 @@
 package userinterface
 
-import resetOpacity
 import setOpacity
 import userinterface.listener.MouseListener
 import userinterface.listener.MouseMotionListener
-import userinterface.popups.ColorPickerPopup
 import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage

@@ -1,8 +1,6 @@
 import userinterface.CustomFont
 import userinterface.WindowHandler
 import utils.Logger
-import java.text.SimpleDateFormat
-import java.util.*
 
 import openrgb.OpenRGBManager
 
