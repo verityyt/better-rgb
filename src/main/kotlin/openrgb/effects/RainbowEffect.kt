@@ -3,7 +3,7 @@ package openrgb.effects
 import openrgb.Effect
 import java.awt.Color
 
-class RainbowEffect(override val fps: Int) : Effect("Static") {
+class RainbowEffect(override val fps: Int) : Effect() {
 
     private var rainbowColors = mutableListOf<Color>()
     private var currentIndex = 0

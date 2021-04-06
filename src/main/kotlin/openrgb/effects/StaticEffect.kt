@@ -2,7 +2,7 @@ package openrgb.effects
 
 import openrgb.Effect
 
-class StaticEffect(private val primaryColorHex: String) : Effect("Static") {
+class StaticEffect(private val primaryColorHex: String) : Effect() {
 
     override var animation = false
 

@@ -2,12 +2,13 @@ package openrgb
 
 import java.awt.Color
 
-open class Effect(val name: String) {
+open class Effect {
 
     private var speed = 60
     var colorHex = "#FFFFFF"
 
     open var animation = false
+    open var needsPrimary = false
     open val fps = 0
 
     open var thread = Thread {}
