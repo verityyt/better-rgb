@@ -100,11 +100,10 @@ object OpenRGBManager {
             deviceEffects[deviceIndex] = zoneThreads
         }
 
-
-        effect.start()
-
         if (effect.animation) {
             val thread = Thread {
+                effect.start()
+
                 while (true) {
                     Thread.sleep((1000 / effect.fps).toLong())
 
@@ -130,6 +129,11 @@ object OpenRGBManager {
 
             thread.start()
         } else {
+
+            effect.start()
+            effect.join()
+            effect.colorHex
+
             val colors = arrayOfNulls<OpenRGBColor>(client.getDeviceController(deviceIndex).zones[zoneIndex].ledsCount)
             colors.fill(OpenRGBColor.fromHexaString(effect.colorHex))
 
