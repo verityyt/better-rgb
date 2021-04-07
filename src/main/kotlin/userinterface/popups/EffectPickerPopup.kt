@@ -26,12 +26,26 @@ class EffectPickerPopup(
 
     private var widgets = listOf(redSlider, greenSlider, blueSlider)
 
+    /**
+     * Whether the **<code>Apply</code> button** is hovered or not
+     */
     private var hoveredApply = false
+
+    /**
+     * Whether the **<code>Cancel</code> button** is hovered or not
+     */
     private var hoveredCancel = false
+
     override var open = true
 
+    /**
+     * Current selected [effect][EffectsEnum]
+     */
     private var effect: EffectsEnum = oldEffect
 
+    /**
+     * Whether the effect needs a secondary color
+     */
     private var needSecondaryColor = (effect == EffectsEnum.STATIC || effect == EffectsEnum.COLOR_GRADIENT)
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
@@ -45,10 +59,10 @@ class EffectPickerPopup(
 
                 for (widget in widgets) {
                     widget.paint(g, g2, observer)
-                    widget.available = true
+                    widget.available = true // Enabling color slider if secondary color is needed
                 }
 
-                /* Preview */
+                // Preview
 
                 g.color = ColorPalette.foreground
                 g.fillRoundRect(220, 270, 110, 110, 25, 25)
@@ -56,14 +70,15 @@ class EffectPickerPopup(
                 g.color = Color(redSlider.value, greenSlider.value, blueSlider.value)
                 g.fillRoundRect(225, 275, 100, 100, 25, 25)
 
+
             } else {
 
                 for (widget in widgets) {
                     widget.paint(g, g2, observer)
-                    widget.available = false
+                    widget.available = false // Disabling color slider if secondary color is NOT needed
                 }
 
-                /* Preview */
+                // Preview
 
                 g2.setOpacity(0.4f)
                 g2.color = ColorPalette.foreground
@@ -74,7 +89,7 @@ class EffectPickerPopup(
 
             }
 
-            /* Done button */
+            // Apply Button
 
             g2.color = ColorPalette.foreground
             g2.setOpacity(
@@ -88,6 +103,8 @@ class EffectPickerPopup(
             g2.font = CustomFont.light?.deriveFont(24f)
             g2.drawString("Apply", 980, 280)
 
+            // Cancel Button
+
             g2.color = ColorPalette.foreground
             g2.setOpacity(
                 if (hoveredCancel) {
@@ -98,7 +115,7 @@ class EffectPickerPopup(
             )
             g2.drawString("Cancel", 970, 430)
 
-            /* Effects */
+            // Effects
 
             when (effect) {
                 EffectsEnum.STATIC -> {
@@ -178,7 +195,6 @@ class EffectPickerPopup(
                 }
             }
 
-
         }
     }
 
@@ -190,9 +206,13 @@ class EffectPickerPopup(
         }
 
         if (x in 979..1039 && y in 239..284) {
+            // Apply Button
+
             exec(redSlider.value, greenSlider.value, blueSlider.value, effect)
             open = false
         } else if (x in 969..1044 && y in 379..484) {
+            // Cancel Button
+
             open = false
         } else if (x in 220..275 && y in 370..435) {
             effect = EffectsEnum.STATIC
@@ -216,7 +236,6 @@ class EffectPickerPopup(
 
         hoveredApply = (x in 979..1039 && y in 239..284)
         hoveredCancel = (x in 969..1044 && y in 379..484)
-
     }
 
     override fun dragMouse(x: Int, y: Int) {

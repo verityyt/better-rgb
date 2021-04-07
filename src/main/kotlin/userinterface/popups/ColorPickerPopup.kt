@@ -23,8 +23,16 @@ class ColorPickerPopup(
 
     private var widgets = listOf(redSlider, greenSlider, blueSlider)
 
+    /**
+     * Whether the **<code>Apply</code> button** is hovered or not
+     */
     private var hoveredApply = false
+
+    /**
+     * Whether the **<code>Cancel</code> button** is hovered or not
+     */
     private var hoveredCancel = false
+
     override var open = true
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
@@ -37,7 +45,7 @@ class ColorPickerPopup(
                 widget.paint(g, g2, observer)
             }
 
-            /* Preview */
+            // Preview
 
             g.color = ColorPalette.foreground
             g.fillRoundRect(220, 270, 110, 110, 25, 25)
@@ -45,7 +53,8 @@ class ColorPickerPopup(
             g.color = Color(redSlider.value, greenSlider.value, blueSlider.value)
             g.fillRoundRect(225, 275, 100, 100, 25, 25)
 
-            /* Done button */
+            // Apply button
+
             g2.color = ColorPalette.foreground
             g2.setOpacity(
                 if (hoveredApply) {
@@ -57,6 +66,8 @@ class ColorPickerPopup(
 
             g2.font = CustomFont.light?.deriveFont(24f)
             g2.drawString("Apply", 980, 280)
+
+            // Cancel button
 
             g2.color = ColorPalette.foreground
             g2.setOpacity(
