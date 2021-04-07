@@ -15,4 +15,4 @@ Currently the only way to install and use **BetterRGB** is to clone this reposit
 
 ### Special thanks to
 - [Adam Honse / CalcProgrammer1](https://gitlab.com/CalcProgrammer1) - Admin and developer of [OpenRGB](https://gitlab.com/CalcProgrammer1/OpenRGB)
-- [morg / mguimard](https://gitlab.com/mguimard) - Developer of [OpenRGB Java Client](https://gitlab.com/mguimard/openrgb-client)
+- [morg / mguimard](https://gitlab.com/mguimard) - Developer of the [OpenRGB Java Client](https://gitlab.com/mguimard/openrgb-client)
