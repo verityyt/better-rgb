@@ -4,6 +4,7 @@ import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Popup
+import userinterface.WindowHandler
 import userinterface.widgets.ColorSliderWidget
 import java.awt.Color
 import java.awt.Graphics
@@ -90,8 +91,10 @@ class ColorPickerPopup(
         if (x in 979..1039 && y in 239..284) {
             exec(redSlider.value, greenSlider.value, blueSlider.value)
             open = false
+            WindowHandler.popup = null
         }else if (x in 969..1044 && y in 349..394) {
             open = false
+            WindowHandler.popup = null
         }
 
     }

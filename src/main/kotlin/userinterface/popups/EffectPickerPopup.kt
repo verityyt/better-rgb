@@ -210,10 +210,11 @@ class EffectPickerPopup(
 
             exec(redSlider.value, greenSlider.value, blueSlider.value, effect)
             open = false
+            WindowHandler.popup = null
         } else if (x in 969..1044 && y in 379..484) {
             // Cancel Button
-
             open = false
+            WindowHandler.popup = null
         } else if (x in 220..275 && y in 370..435) {
             effect = EffectsEnum.STATIC
             needSecondaryColor = false
