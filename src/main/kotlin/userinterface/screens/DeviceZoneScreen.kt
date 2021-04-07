@@ -335,17 +335,23 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                                 val effect = zoneCurrentEffect[button.zoneIndex]!!
 
                                 if (effect.animation && (effect.endColor != null)) {
-                                    val startHex = String.format("#%02x%02x%02x", red, green, blue) // New primary color from color picker
+                                    val startHex = String.format(
+                                        "#%02x%02x%02x",
+                                        red,
+                                        green,
+                                        blue
+                                    ) // New primary color from color picker
                                     val endColor = effect.endColor // Old secondary color from old effect
                                     val endHex =
                                         String.format("#%02x%02x%02x", endColor!!.red, endColor.green, endColor.blue)
 
                                     setEffect(deviceIndex, GradientEffect(60, startHex, endHex), button, false)
                                 } else {
-                                    OpenRGBManager.updateZoneColor(
+                                    setEffect(
                                         deviceIndex,
-                                        button.zoneIndex,
-                                        GradientEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF")
+                                        GradientEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
+                                        button,
+                                        false
                                     )
                                 }
                             } else {
