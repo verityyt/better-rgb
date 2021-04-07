@@ -5,12 +5,23 @@ import java.awt.Color
 
 class GradientEffect(override val fps: Int, startHex: String, endHex: String) : Effect() {
 
+
+    /**
+     * Start color of current blend
+     */
     private var startColor = Color.decode(startHex)
+
+    /**
+     * End color of current blend
+     */
     var endColor = Color.decode(endHex)
 
     var originalStartColor = Color.white
     var originalEndColor = Color.white
 
+    /**
+     * Ratio of current blend
+     */
     private var ratio = 0f
 
     override var animation = true
@@ -40,9 +51,9 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
 
     private fun blend(c1: Color, c2: Color, ratio: Float): Color {
 
-        var ratio = ratio
-        if (ratio > 1f) ratio = 1f else if (ratio < 0f) ratio = 0f
-        val iRatio = 1.0f - ratio
+        var cRatio = ratio
+        if (cRatio > 1f) cRatio = 1f else if (cRatio < 0f) cRatio = 0f
+        val iRatio = 1.0f - cRatio
         val i1 = c1.rgb
         val i2 = c2.rgb
         val a1 = i1 shr 24 and 0xff
@@ -53,10 +64,10 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
         val r2 = i2 and 0xff0000 shr 16
         val g2 = i2 and 0xff00 shr 8
         val b2 = i2 and 0xff
-        val a = (a1 * iRatio + a2 * ratio).toInt()
-        val r = (r1 * iRatio + r2 * ratio).toInt()
-        val g = (g1 * iRatio + g2 * ratio).toInt()
-        val b = (b1 * iRatio + b2 * ratio).toInt()
+        val a = (a1 * iRatio + a2 * cRatio).toInt()
+        val r = (r1 * iRatio + r2 * cRatio).toInt()
+        val g = (g1 * iRatio + g2 * cRatio).toInt()
+        val b = (b1 * iRatio + b2 * cRatio).toInt()
         return Color(a shl 24 or (r shl 16) or (g shl 8) or b)
     }
 }

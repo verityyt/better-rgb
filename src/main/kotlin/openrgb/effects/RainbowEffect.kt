@@ -5,7 +5,14 @@ import java.awt.Color
 
 class RainbowEffect(override val fps: Int) : Effect() {
 
+    /**
+     * List of generated rainbow colors
+     */
     private var rainbowColors = mutableListOf<Color>()
+
+    /**
+     * Index of current wave
+     */
     private var currentIndex = 0
 
     override var animation = true
