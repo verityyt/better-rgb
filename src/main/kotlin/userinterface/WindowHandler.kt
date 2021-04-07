@@ -15,7 +15,14 @@ object WindowHandler {
 
     private lateinit var frame: JFrame
 
+    /**
+     * Current [screen][Screen]
+     */
     var screen: Screen? = null
+
+    /**
+     * Current [popup][Popup]
+     */
     var popup: Popup? = null
         set(value) {
             if (field == null || !field!!.open) {
@@ -23,19 +30,22 @@ object WindowHandler {
             }
         }
 
+    /**
+     * Current hovered sidebar item *(used to change opacity of hovered sidebar item)*
+     */
     var hoveredSidebarItem: SidebarItem? = SidebarItem.HELP
 
     fun openWindow() {
 
         frame = object : JFrame() {
             override fun paint(g: Graphics) {
-                /* Create virtual environment (BufferedImage) */
+                // Create virtual environment (BufferedImage)
 
                 val bf = BufferedImage(1200, 750, BufferedImage.TYPE_INT_BGR)
                 val graphics = bf.createGraphics()
                 val graphics2D = graphics as Graphics2D
 
-                /* Set RenderingHints */
+                // Set RenderingHints
 
                 graphics.setRenderingHint(
                     RenderingHints.KEY_RENDERING,
@@ -62,12 +72,12 @@ object WindowHandler {
                     RenderingHints.VALUE_FRACTIONALMETRICS_ON
                 )
 
-                /* Draw background */
+                // Draw background
 
                 graphics.color = ColorPalette.background
                 graphics.fillRect(0, 0, 1200, 750)
 
-                /* Draw current/target screen */
+                // Draw current/target screen
 
                 if (screen == null) {
                     graphics.drawImage(
@@ -88,7 +98,7 @@ object WindowHandler {
 
                 popup?.paint(graphics, graphics2D, this)
 
-                /* Draw sidebar */
+                // Draw sidebar
 
                 drawSidebarItem(graphics2D, SidebarItem.DEVICES, this)
                 drawSidebarItem(graphics2D, SidebarItem.UPDATES, this)
@@ -98,7 +108,7 @@ object WindowHandler {
                 graphics2D.setOpacity(0.4f)
                 graphics2D.fillRect(88, 0, 2, 750)
 
-                /* Draw BufferedImage */
+                // Draw BufferedImage
 
                 g.color = ColorPalette.background
                 g.fillRect(0, 0, 1200, 750)
@@ -170,13 +180,16 @@ object WindowHandler {
 
         Thread {
             while (true) {
-                Thread.sleep(1000 / 60)
+                Thread.sleep(1000 / 60) // Repainting window/frame 60 times in a second -> 60 fps
                 frame.repaint()
             }
         }.start()
 
     }
 
+    /**
+     * Updates window/frame title
+     */
     fun updateTitle() {
         if (screen == null) {
             frame.title = "BetterRGB | Home"
@@ -189,6 +202,9 @@ object WindowHandler {
         }
     }
 
+    /**
+     * Draws sidebar item
+     */
     private fun drawSidebarItem(g2: Graphics2D, item: SidebarItem, observer: ImageObserver) {
         g2.setOpacity(
             if (item == hoveredSidebarItem) {

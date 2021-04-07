@@ -6,6 +6,9 @@ import java.awt.image.ImageObserver
 
 abstract class Popup {
 
+    /**
+     * Whether to popup is open or not
+     */
     abstract var open: Boolean
 
     abstract fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver)
