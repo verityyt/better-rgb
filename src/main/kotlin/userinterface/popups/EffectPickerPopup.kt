@@ -6,6 +6,7 @@ import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Popup
+import userinterface.WindowHandler
 import userinterface.widgets.ColorSliderWidget
 import java.awt.Color
 import java.awt.Graphics
@@ -43,18 +44,13 @@ class EffectPickerPopup(
      */
     private var effect: EffectsEnum = oldEffect
 
-    /**
-     * Whether the effect needs a secondary color
-     */
-    private var needSecondaryColor = (effect == EffectsEnum.STATIC || effect == EffectsEnum.COLOR_GRADIENT)
-
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
         if (open) {
             g.color = Color.decode("#555555")
             g.fillRoundRect(250 - 50, 220 + 30, 850, 200, 25, 25)
 
-            if (needSecondaryColor) {
+            if (effect.needSecondary) {
                 g2.resetOpacity()
 
                 for (widget in widgets) {
@@ -199,7 +195,7 @@ class EffectPickerPopup(
     }
 
     override fun mouseClicked(x: Int, y: Int) {
-        if (needSecondaryColor) {
+        if (effect.needSecondary) {
             for (widget in widgets) {
                 widget.mouseClicked(x, y)
             }
@@ -217,19 +213,16 @@ class EffectPickerPopup(
             WindowHandler.popup = null
         } else if (x in 220..275 && y in 370..435) {
             effect = EffectsEnum.STATIC
-            needSecondaryColor = false
         } else if (x in 320..430 && y in 370..435) {
             effect = EffectsEnum.COLOR_GRADIENT
-            needSecondaryColor = true
         } else if (x in 510..680 && y in 370..435) {
             effect = EffectsEnum.RAINBOW_WAVE
-            needSecondaryColor = false
         }
 
     }
 
     override fun mouseMoved(x: Int, y: Int) {
-        if (needSecondaryColor) {
+        if (effect.needSecondary) {
             for (widget in widgets) {
                 widget.mouseMoved(x, y)
             }
@@ -240,7 +233,7 @@ class EffectPickerPopup(
     }
 
     override fun dragMouse(x: Int, y: Int) {
-        if (needSecondaryColor) {
+        if (effect.needSecondary) {
             for (widget in widgets) {
                 widget.dragMouse(x, y)
             }
