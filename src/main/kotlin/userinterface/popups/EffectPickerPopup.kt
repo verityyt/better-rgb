@@ -11,6 +11,7 @@ import userinterface.widgets.ColorSliderWidget
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
+import java.awt.Rectangle
 import java.awt.image.ImageObserver
 
 class EffectPickerPopup(
@@ -46,6 +47,10 @@ class EffectPickerPopup(
      * Current selected [effect][EffectsEnum]
      */
     private var effect: EffectsEnum = oldEffect
+
+    private var drawEffectX = 220
+
+    private var effectRects = HashMap<EffectsEnum, Rectangle>()
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
@@ -116,83 +121,36 @@ class EffectPickerPopup(
 
             // Effects
 
-            when (effect) {
-                EffectsEnum.STATIC -> {
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
-                    g2.fillRoundRect(220, 400, 75, 35, 10, 10)
+            for (effect in EffectsEnum.values()) {
+                g2.resetOpacity()
 
-                    g.color = ColorPalette.background
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Static", 225, 426)
+                // Text
 
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.background
-                    g2.fillRoundRect(220 + 100, 400, 170, 35, 10, 10)
-
-                    g.color = ColorPalette.foreground
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Color Gradient", 225 + 100, 426)
-
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.background
-                    g2.fillRoundRect(320 + 190, 400, 170, 35, 10, 10)
-
-                    g.color = ColorPalette.foreground
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Rainbow Wave", 325 + 190, 426)
+                g.color = if (effect == this.effect) {
+                    ColorPalette.foreground
+                } else {
+                    ColorPalette.background
                 }
-                EffectsEnum.COLOR_GRADIENT -> {
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.background
-                    g2.fillRoundRect(220, 400, 75, 35, 10, 10)
 
-                    g.color = ColorPalette.foreground
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Static", 225, 426)
+                val rectWidth = g.fontMetrics.stringWidth(effect.displayName) + 10
 
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
-                    g2.fillRoundRect(220 + 100, 400, 170, 35, 10, 10)
+                g.fillRoundRect(drawEffectX, 400, rectWidth, 35, 10, 10)
 
-                    g.color = ColorPalette.background
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Color Gradient", 225 + 100, 426)
+                effectRects[effect] = Rectangle(drawEffectX, 400, rectWidth, 35)
 
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.background
-                    g2.fillRoundRect(320 + 190, 400, 170, 35, 10, 10)
-
-                    g.color = ColorPalette.foreground
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Rainbow Wave", 325 + 190, 426)
+                g.color = if (effect == this.effect) {
+                    ColorPalette.background
+                } else {
+                    ColorPalette.foreground
                 }
-                EffectsEnum.RAINBOW_WAVE -> {
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.background
-                    g2.fillRoundRect(220, 400, 75, 35, 10, 10)
 
-                    g.color = ColorPalette.foreground
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Static", 225, 426)
+                g.drawString(effect.displayName, drawEffectX + 5, 400 + 25)
 
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.background
-                    g2.fillRoundRect(220 + 100, 400, 170, 35, 10, 10)
+                drawEffectX += rectWidth + 10
 
-                    g.color = ColorPalette.foreground
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Color Gradient", 225 + 100, 426)
-
-                    g2.resetOpacity()
-                    g2.color = ColorPalette.foreground
-                    g2.fillRoundRect(320 + 190, 400, 170, 35, 10, 10)
-
-                    g.color = ColorPalette.background
-                    g.font = CustomFont.regular?.deriveFont(24f)
-                    g.drawString("Rainbow Wave", 325 + 190, 426)
-                }
             }
+
+            drawEffectX = 220
 
         }
     }
@@ -214,12 +172,17 @@ class EffectPickerPopup(
             // Cancel Button
             open = false
             WindowHandler.popup = null
-        } else if (x in 220..275 && y in 370..435) {
-            effect = EffectsEnum.STATIC
-        } else if (x in 320..430 && y in 370..435) {
-            effect = EffectsEnum.COLOR_GRADIENT
-        } else if (x in 510..680 && y in 370..435) {
-            effect = EffectsEnum.RAINBOW_WAVE
+        }
+
+        for (effectRect in effectRects) {
+            val rectX = effectRect.value.x
+            val rectY = effectRect.value.y
+            val rectW = effectRect.value.width
+            val rectH = effectRect.value.height
+
+            if (x in (rectX)..(rectX + rectW) && y in (rectY - 25)..(rectY + rectH)) {
+                effect = effectRect.key
+            }
         }
 
     }
