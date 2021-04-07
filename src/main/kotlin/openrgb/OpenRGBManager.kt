@@ -142,7 +142,7 @@ object OpenRGBManager {
             val zoneThreads = deviceEffects[deviceIndex] as HashMap<Int, Thread>
 
             if (zoneThreads.containsKey(zoneIndex)) { // Check if a effect is already running on the zone by DeviceIndex and ZoneIndex
-                zoneThreads[zoneIndex]?.interrupt() // Stopping current running effect of the zone
+                zoneThreads[zoneIndex]?.stop() // Stopping current running effect of the zone
                 zoneThreads.remove(zoneIndex)
             }
 
