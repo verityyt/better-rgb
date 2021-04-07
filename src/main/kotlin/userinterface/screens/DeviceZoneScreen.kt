@@ -23,7 +23,7 @@ import javax.imageio.ImageIO
 
 class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: Int) : Screen() {
 
-    private var deviceZones: HashMap<Int, String> = OpenRGBManager.getDeviceZoneNames(deviceIndex)
+    private var deviceZones: HashMap<Int, String> = OpenRGBManager.getDeviceZones(deviceIndex)
 
     private val zoneColorButton = HashMap<Int, ZoneConfigurationButton>()
 
