@@ -14,6 +14,7 @@ import userinterface.Screen
 import userinterface.WindowHandler
 import userinterface.popups.ColorPickerPopup
 import userinterface.popups.EffectPickerPopup
+import utils.ColorPartEnum
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -23,14 +24,41 @@ import javax.imageio.ImageIO
 
 class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: Int) : Screen() {
 
+    /**
+     * List of all zones of this device by zoneIndex
+     * > **Key**: ZoneIndex
+     *
+     * > **Value**: ZoneName
+     */
     private var deviceZones: HashMap<Int, String> = OpenRGBManager.getDeviceZones(deviceIndex)
 
+    /**
+     * List of all [ZoneConfigurationButton]s of this device by zoneIndex
+     * > **Key**: ZoneIndex
+     *
+     * > **Value**: [ZoneConfigurationButton]
+     */
     private val zoneColorButton = HashMap<Int, ZoneConfigurationButton>()
 
+    /**
+     * List of all zone effects *(as [EffectsEnum])* of this device by zoneIndex
+     * > **Key**: ZoneIndex
+     *
+     * > **Value**: [EffectsEnum]
+     */
     private val zoneEffects = HashMap<Int, EffectsEnum>()
 
+    /**
+     * List of all zones current effect (as [Effect]) of this device by zoneIndex
+     * > **Key**: ZoneIndex
+     *
+     * > **Value**: [Effect]
+     */
     private val zoneCurrentEffect = HashMap<Int, Effect>()
 
+    /**
+     * Draw **<code>y-Coordinate</code>** of the currently drawn zone name and button
+     */
     private var drawZoneY = 175
 
     init {
@@ -38,9 +66,10 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             var zoneName = deviceZones[zoneIndex]!!
 
             if (zoneName.length > 25) {
-                zoneName = zoneName.substring(0, 23) + "..."
-                zoneName = zoneName.substring(0, 23) + "..."
+                zoneName = zoneName.substring(0, 23) + "..." // Update zone name if its to long
             }
+
+            // Save ZoneConfigurationButton in zoneColorButton by zoneIndex
 
             zoneColorButton[zoneIndex] = ZoneConfigurationButton(
                 zoneIndex, if (zoneIndex <= 8) {
@@ -49,6 +78,8 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                     996 - 125
                 }, drawZoneY - 19
             )
+
+            // Updating drawZoneY for next zone
 
             if (zoneIndex == 8) {
                 drawZoneY = 175
@@ -62,6 +93,8 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
+        // Draw device name
+
         g.color = ColorPalette.foreground
         g.font = CustomFont.bold?.deriveFont(24f)
         g.drawString("$deviceName:", 175, 125)
@@ -70,9 +103,10 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             var zoneName = deviceZones[zoneIndex]!!
 
             if (zoneName.length > 25) {
-                zoneName = zoneName.substring(0, 23) + "..."
-                zoneName = zoneName.substring(0, 23) + "..."
+                zoneName = zoneName.substring(0, 23) + "..." // Update zone name if its to long
             }
+
+            // Draw zone name
 
             g.color = ColorPalette.foreground
             g.font = CustomFont.regular?.deriveFont(24f)
@@ -87,62 +121,32 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
             g2.resetOpacity()
 
-            if (zoneEffects.containsKey(zoneIndex)) {
-                if (!zoneEffects[zoneIndex]!!.needPrimary) {
-                    g2.setOpacity(0.4f)
+            // Draw color preview
 
-                    g2.fillRoundRect(
-                        if (zoneIndex <= 8) {
-                            557 - 125
-                        } else {
-                            987 - 125
-                        }, drawZoneY - 27, 35, 35, 10, 10
-                    )
-
-                    g2.color = Color.decode(zoneColorButton[zoneIndex]!!.colorHex)
-                    g2.fillRoundRect(
-                        if (zoneIndex <= 8) {
-                            560 - 125
-                        } else {
-                            990 - 125
-                        }, drawZoneY - 24, 29, 29, 10, 10
-                    )
-                } else {
-                    g.fillRoundRect(
-                        if (zoneIndex <= 8) {
-                            557 - 125
-                        } else {
-                            987 - 125
-                        }, drawZoneY - 27, 35, 35, 10, 10
-                    )
-
-                    g.color = Color.decode(zoneColorButton[zoneIndex]!!.colorHex)
-                    g.fillRoundRect(
-                        if (zoneIndex <= 8) {
-                            560 - 125
-                        } else {
-                            990 - 125
-                        }, drawZoneY - 24, 29, 29, 10, 10
-                    )
-                }
+            if (zoneEffects.containsKey(zoneIndex) && !zoneEffects[zoneIndex]!!.needPrimary) {
+                g2.setOpacity(0.4f)
             } else {
-                g.fillRoundRect(
-                    if (zoneIndex <= 8) {
-                        557 - 125
-                    } else {
-                        987 - 125
-                    }, drawZoneY - 27, 35, 35, 10, 10
-                )
-
-                g.color = Color.decode(zoneColorButton[zoneIndex]!!.colorHex)
-                g.fillRoundRect(
-                    if (zoneIndex <= 8) {
-                        560 - 125
-                    } else {
-                        990 - 125
-                    }, drawZoneY - 24, 29, 29, 10, 10
-                )
+                g2.resetOpacity()
             }
+
+            g2.fillRoundRect(
+                if (zoneIndex <= 8) {
+                    557 - 125
+                } else {
+                    987 - 125
+                }, drawZoneY - 27, 35, 35, 10, 10
+            )
+
+            g2.color = Color.decode(zoneColorButton[zoneIndex]!!.colorHex)
+            g2.fillRoundRect(
+                if (zoneIndex <= 8) {
+                    560 - 125
+                } else {
+                    990 - 125
+                }, drawZoneY - 24, 29, 29, 10, 10
+            )
+
+            // Draw effect button
 
             g2.resetOpacity()
             g.color = ColorPalette.foreground
@@ -174,6 +178,8 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                 observer
             )
 
+            // Updating drawDeviceY for next zone
+
             if (zoneIndex == 8) {
                 drawZoneY = 175
             } else {
@@ -190,6 +196,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             val button = entry.value
 
             if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 50) until (button.y)) {
+                // Click color preview
 
                 if (zoneEffects.containsKey(button.zoneIndex)) {
                     if (zoneEffects[button.zoneIndex]!!.needPrimary) {
@@ -199,88 +206,8 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                     handleColorPicker(button)
                 }
             } else if (x in (button.x + 53) until (button.x + 153) && y in (button.y - 50) until (button.y)) {
-                WindowHandler.popup = EffectPickerPopup(
-                    { red: Int, green: Int, blue: Int, effect: EffectsEnum ->
-                        zoneEffects[button.zoneIndex] = effect
-
-                        when (effect) {
-                            EffectsEnum.STATIC -> {
-                                val colorHex = zoneColorButton[button.zoneIndex]!!.colorHex
-
-                                val effect = StaticEffect(colorHex)
-
-                                OpenRGBManager.updateZoneColor(
-                                    deviceIndex,
-                                    button.zoneIndex,
-                                    effect
-                                )
-
-                                zoneCurrentEffect[button.zoneIndex] = effect
-
-                                button.colorHex = colorHex
-                            }
-                            EffectsEnum.COLOR_GRADIENT -> {
-                                val colorHex = zoneColorButton[button.zoneIndex]!!.colorHex
-
-                                val effect =
-                                    GradientEffect(60, colorHex, String.format("#%02x%02x%02x", red, green, blue))
-
-                                OpenRGBManager.updateZoneColor(
-                                    deviceIndex,
-                                    button.zoneIndex,
-                                    effect
-                                )
-
-                                zoneCurrentEffect[button.zoneIndex] = effect
-                            }
-                            EffectsEnum.RAINBOW_WAVE -> {
-                                val effect = RainbowEffect(60)
-
-                                OpenRGBManager.updateZoneColor(
-                                    deviceIndex,
-                                    button.zoneIndex,
-                                    effect
-                                )
-
-                                zoneCurrentEffect[button.zoneIndex] = effect
-                            }
-                        }
-                    },
-                    zoneEffects[button.zoneIndex] ?: EffectsEnum.STATIC,
-                    if (zoneCurrentEffect[button.zoneIndex] == null) {
-                        0
-                    } else {
-                        val oldEffect = zoneCurrentEffect[button.zoneIndex]
-                        if (oldEffect is GradientEffect) {
-                            val effect = zoneCurrentEffect[button.zoneIndex] as GradientEffect
-                            effect.originalEndColor.red
-                        } else {
-                            0
-                        }
-                    },
-                    if (zoneCurrentEffect[button.zoneIndex] == null) {
-                        0
-                    } else {
-                        val oldEffect = zoneCurrentEffect[button.zoneIndex]
-                        if (oldEffect is GradientEffect) {
-                            val effect = zoneCurrentEffect[button.zoneIndex] as GradientEffect
-                            effect.originalEndColor.green
-                        } else {
-                            0
-                        }
-                    },
-                    if (zoneCurrentEffect[button.zoneIndex] == null) {
-                        0
-                    } else {
-                        val oldEffect = zoneCurrentEffect[button.zoneIndex]
-                        if (oldEffect is GradientEffect) {
-                            val effect = zoneCurrentEffect[button.zoneIndex] as GradientEffect
-                            effect.originalEndColor.blue
-                        } else {
-                            0
-                        }
-                    }
-                )
+                // Click effect button
+                handleEffectPicker(button)
             }
         }
     }
@@ -291,44 +218,129 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
     override fun mousePressed(x: Int, y: Int) {}
 
-    private fun handleColorPicker(button: ZoneConfigurationButton) {
+    /**
+     * Sets effect to zone by **Device-** and **ZoneIndex**
+     */
+    private fun setEffect(
+        deviceIndex: Int,
+        effect: Effect,
+        button: ZoneConfigurationButton,
+        setButtonColorHex: Boolean = true
+    ) {
+        OpenRGBManager.updateZoneColor(
+            deviceIndex,
+            button.zoneIndex,
+            effect
+        )
 
+        zoneCurrentEffect[button.zoneIndex] = effect
+
+        if (setButtonColorHex) {
+            button.colorHex = effect.colorHex
+        }
+    }
+
+    /**
+     * Opens effect picker and performs effect to specific zone by [ZoneConfigurationButton]
+     */
+    private fun handleEffectPicker(button: ZoneConfigurationButton) {
+        WindowHandler.popup = EffectPickerPopup(
+            { red: Int, green: Int, blue: Int, effect: EffectsEnum ->
+                zoneEffects[button.zoneIndex] = effect
+
+                when (effect) {
+                    EffectsEnum.STATIC -> {
+                        setEffect(
+                            deviceIndex,
+                            StaticEffect(zoneColorButton[button.zoneIndex]!!.colorHex),
+                            button
+                        )
+                    }
+                    EffectsEnum.COLOR_GRADIENT -> {
+                        setEffect(
+                            deviceIndex,
+                            GradientEffect(
+                                60,
+                                zoneColorButton[button.zoneIndex]!!.colorHex,
+                                String.format("#%02x%02x%02x", red, green, blue)
+                            ),
+                            button,
+                            false
+                        )
+                    }
+                    EffectsEnum.RAINBOW_WAVE -> {
+                        setEffect(
+                            deviceIndex,
+                            RainbowEffect(60),
+                            button,
+                            false
+                        )
+                    }
+                }
+            },
+            zoneEffects[button.zoneIndex] ?: EffectsEnum.STATIC,
+            getOldColorForPart(button, ColorPartEnum.RED),
+            getOldColorForPart(button, ColorPartEnum.GREEN),
+            getOldColorForPart(button, ColorPartEnum.BLUE)
+        )
+    }
+
+    /**
+     * @return The which int has to be passed to [EffectPickerPopup] as old[{COLOR_NAME}][ColorPartEnum]
+     *
+     * by **ZoneIndex** and **[ColorPartEnum]**
+     */
+    private fun getOldColorForPart(button: ZoneConfigurationButton, colorPart: ColorPartEnum): Int {
+        if (zoneCurrentEffect[button.zoneIndex] == null) {
+            return 0
+        } else {
+            val effect = zoneCurrentEffect[button.zoneIndex]!!
+
+            if (effect.enumTpe.needSecondary) {
+                if (effect.originalEndColor != null) {
+                    when (colorPart) {
+                        ColorPartEnum.RED -> return effect.originalEndColor!!.red
+                        ColorPartEnum.GREEN -> return effect.originalEndColor!!.green
+                        ColorPartEnum.BLUE -> return effect.originalEndColor!!.blue
+                    }
+                } else {
+                    return 0
+                }
+            } else {
+                return 0
+            }
+        }
+
+        return 0
+    }
+
+    private fun handleColorPicker(button: ZoneConfigurationButton) {
         val color = Color.decode(button.colorHex)
 
         WindowHandler.popup = ColorPickerPopup(
             { red: Int, green: Int, blue: Int ->
 
-                if (zoneEffects.containsKey(button.zoneIndex)) {
+                if (zoneEffects.containsKey(button.zoneIndex)) { // Check if an effect is already running on this zone
 
                     when (zoneEffects[button.zoneIndex]) {
                         EffectsEnum.STATIC -> {
-
-                            val colorHex = String.format("#%02x%02x%02x", red, green, blue)
-
-                            OpenRGBManager.updateZoneColor(
+                            setEffect(
                                 deviceIndex,
-                                button.zoneIndex,
-                                StaticEffect(colorHex)
+                                StaticEffect(String.format("#%02x%02x%02x", red, green, blue)),
+                                button
                             )
-
-                            button.colorHex = colorHex
                         }
                         EffectsEnum.COLOR_GRADIENT -> {
                             if (zoneCurrentEffect.containsKey(button.zoneIndex)) {
-                                if (zoneCurrentEffect[button.zoneIndex] is GradientEffect) {
-                                    val oldEffect = zoneCurrentEffect[button.zoneIndex] as GradientEffect
-                                    val startHex = String.format("#%02x%02x%02x", red, green, blue)
-                                    val endColor = oldEffect.endColor
+                                val effect = zoneCurrentEffect[button.zoneIndex]!!
+
+                                if (effect.animation && (effect.endColor != null)) {
+                                    val startHex = String.format("#%02x%02x%02x", red, green, blue) // New primary color from color picker
+                                    val endColor = effect.endColor // Old secondary color from old effect
                                     val endHex =
-                                        String.format("#%02x%02x%02x", endColor.red, endColor.green, endColor.blue)
+                                        String.format("#%02x%02x%02x", endColor!!.red, endColor.green, endColor.blue)
 
-                                    val effect = GradientEffect(60, startHex, endHex)
-
-                                    OpenRGBManager.updateZoneColor(
-                                        deviceIndex,
-                                        button.zoneIndex,
-                                        effect
-                                    )
+                                    setEffect(deviceIndex, GradientEffect(60, startHex, endHex), button, false)
                                 } else {
                                     OpenRGBManager.updateZoneColor(
                                         deviceIndex,
@@ -337,40 +349,24 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                                     )
                                 }
                             } else {
-                                OpenRGBManager.updateZoneColor(
+                                setEffect(
                                     deviceIndex,
-                                    button.zoneIndex,
-                                    GradientEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF")
+                                    GradientEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
+                                    button,
+                                    false
                                 )
                             }
-
-                            button.colorHex = String.format("#%02x%02x%02x", red, green, blue)
                         }
                         EffectsEnum.RAINBOW_WAVE -> {
-                            OpenRGBManager.updateZoneColor(
-                                deviceIndex,
-                                button.zoneIndex,
-                                RainbowEffect(60)
-                            )
+                            setEffect(deviceIndex, RainbowEffect(60), button, false)
                         }
                     }
 
                 } else {
-                    val colorHex = String.format("#%02x%02x%02x", red, green, blue)
-
-                    OpenRGBManager.updateZoneColor(
-                        deviceIndex,
-                        button.zoneIndex,
-                        StaticEffect(colorHex)
-                    )
-
-                    button.colorHex = colorHex
+                    setEffect(deviceIndex, StaticEffect(String.format("#%02x%02x%02x", red, green, blue)), button)
                 }
-
-                WindowHandler.popup = null
             }, color.red, color.green, color.blue
         )
-
     }
 
 }
