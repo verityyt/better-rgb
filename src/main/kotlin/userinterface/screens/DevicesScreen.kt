@@ -15,23 +15,33 @@ import javax.imageio.ImageIO
 
 class DevicesScreen : Screen() {
 
+    /**
+     * Whether the **<code>Try again</code>** button is hovered or not
+     */
     private var buttonHovered = false
 
+    /**
+     * Draw **<code>y-Coordinate</code>** of the currently drawn device name and button
+     */
     private var drawDeviceY = 175
 
+    /**
+     * List of [DeviceConfigurationButton]s
+     */
     private val deviceConfigurationButtons = mutableListOf<DeviceConfigurationButton>()
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
-        if (OpenRGBManager.connected) {
+        if (OpenRGBManager.connected) { // Check if OpenRGB client is connected
 
             for (deviceIndex in 0 until OpenRGBManager.deviceByIndex.size) {
                 var deviceName = OpenRGBManager.deviceByIndex[deviceIndex]!!
 
                 if (deviceName.length > 25) {
-                    deviceName = deviceName.substring(0, 23) + "..."
-                    deviceName = deviceName.substring(0, 23) + "..."
+                    deviceName = deviceName.substring(0, 23) + "..." // Update device name if its to long
                 }
+
+                // Draw DeviceName
 
                 g.color = ColorPalette.foreground
                 g.font = CustomFont.regular?.deriveFont(24f)
@@ -43,6 +53,8 @@ class DevicesScreen : Screen() {
                         660
                     }, drawDeviceY
                 )
+
+                // Draw configure button
 
                 g2.fillRoundRect(
                     if (deviceIndex <= 8) {
@@ -60,6 +72,8 @@ class DevicesScreen : Screen() {
                     }, drawDeviceY - 19, 24, 24, observer
                 )
 
+                // Adding drawn configure button to list
+
                 deviceConfigurationButtons.add(
                     DeviceConfigurationButton(
                         deviceIndex, if (deviceIndex <= 8) {
@@ -70,6 +84,8 @@ class DevicesScreen : Screen() {
                     )
                 )
 
+                // Updating drawDeviceY for next device
+
                 if (deviceIndex == 8) {
                     drawDeviceY = 175
                 } else {
@@ -77,9 +93,12 @@ class DevicesScreen : Screen() {
                 }
             }
 
+            // Resetting drawDeviceY
             drawDeviceY = 175
 
         } else {
+
+            // Warning texts
 
             g.color = ColorPalette.foreground
             g.font = CustomFont.regular?.deriveFont(36f)
@@ -88,7 +107,7 @@ class DevicesScreen : Screen() {
             g.font = CustomFont.regular?.deriveFont(18f)
             g.drawString("Please start SDK Server in OpenRGB, and try again.", 425, 340)
 
-            /* Draw 'try again' button */
+            // Draw 'Try again' button
 
             g2.color = ColorPalette.foreground
             g2.setOpacity(
@@ -110,15 +129,17 @@ class DevicesScreen : Screen() {
 
     override fun mouseClicked(x: Int, y: Int) {
         if (x in 549..689 && y in 349..404) {
+            // 'Try again' button
+
             Thread {
                 OpenRGBManager.connect()
             }.start()
         }
 
         for (button in deviceConfigurationButtons) {
-            if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 50) until (button.y)) {
+            if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 50) until (button.y)) { // Checking which configure button is clicked
                 if (WindowHandler.screen !is DeviceZoneScreen) {
-                    WindowHandler.screen = OpenRGBManager.deviceZoneScreens[button.deviceIndex]
+                    WindowHandler.screen = OpenRGBManager.deviceZoneScreens[button.deviceIndex] // Setting screen of clicked configure button
                 }
             }
         }

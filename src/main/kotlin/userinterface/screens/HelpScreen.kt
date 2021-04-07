@@ -11,7 +11,7 @@ class HelpScreen : Screen() {
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
-        /* Software Information */
+        // Software Information
 
         g.color = ColorPalette.foreground
         g.font = CustomFont.bold?.deriveFont(22f)
@@ -27,7 +27,7 @@ class HelpScreen : Screen() {
         g.drawString("Operating System:", 205, 205)
         g.drawString(System.getProperty("os.name"), 375, 205)
 
-        /* Credits */
+        // Credits
 
         g.color = ColorPalette.foreground
         g.font = CustomFont.bold?.deriveFont(22f)

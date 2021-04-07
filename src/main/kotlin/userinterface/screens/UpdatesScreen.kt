@@ -7,6 +7,8 @@ import java.awt.image.ImageObserver
 
 class UpdatesScreen : Screen() {
 
+    // Screen is empty because update screen is not implemented yet
+
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) { }
 
     override fun mouseClicked(x: Int, y: Int) {}
