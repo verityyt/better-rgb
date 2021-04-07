@@ -13,6 +13,11 @@ Currently the only way to install and use **BetterRGB** is to clone this reposit
 - **Breathing** (1 color breathing in and out)
 - **Flashing** (1 static color with random timed and pre-set colored flashes)
 
+### Requirements
+- **OpenRGB** has to be installed
+- The **SDK Server** of **OpenRGB** has to run on <code>port 6742</code>
+- At least <code>java 1.8.0_261</code> has to be installed
+
 ### Special thanks to
 - [Adam Honse / CalcProgrammer1](https://gitlab.com/CalcProgrammer1) - Admin and developer of [OpenRGB](https://gitlab.com/CalcProgrammer1/OpenRGB)
 - [morg / mguimard](https://gitlab.com/mguimard) - Developer of the [OpenRGB Java Client](https://gitlab.com/mguimard/openrgb-client)
