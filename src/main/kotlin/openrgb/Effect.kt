@@ -26,9 +26,13 @@ open class Effect {
 
     open var enumTpe: EffectsEnum = EffectsEnum.STATIC
 
-    open var originalStartColor = Color.white
+    open var originalStartColor: Color? = null
 
-    open var originalEndColor = Color.white
+    open var originalEndColor: Color? = null
+
+    open var startColor: Color? = null
+
+    open var endColor: Color? = null
 
     open fun start() = thread.start()
 

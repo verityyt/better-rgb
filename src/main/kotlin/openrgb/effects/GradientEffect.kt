@@ -10,14 +10,15 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
     /**
      * Start color of current blend
      */
-    private var startColor = Color.decode(startHex)
+    override var startColor = Color.decode(startHex)
 
     /**
      * End color of current blend
      */
-    var endColor = Color.decode(endHex)
+    override var endColor = Color.decode(endHex)
 
     override var originalStartColor = Color.white
+
     override var originalEndColor = Color.white
 
     /**
