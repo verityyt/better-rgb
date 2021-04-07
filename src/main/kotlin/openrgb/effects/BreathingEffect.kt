@@ -56,8 +56,6 @@ class BreathingEffect(override val fps: Int, startHex: String) : Effect() {
             if (ratio >= 1.0f) {
                 ratio = 0f
 
-                println("Resetting ratio")
-
                 val tempStartColor = startColor
                 startColor = endColor
                 endColor = tempStartColor
