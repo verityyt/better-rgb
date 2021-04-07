@@ -3,6 +3,7 @@ package userinterface.screens
 import openrgb.Effect
 import openrgb.EffectsEnum
 import openrgb.OpenRGBManager
+import openrgb.effects.BreathingEffect
 import openrgb.effects.GradientEffect
 import openrgb.effects.RainbowEffect
 import openrgb.effects.StaticEffect
@@ -227,12 +228,14 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
         button: ZoneConfigurationButton,
         setButtonColorHex: Boolean = true
     ) {
+
         OpenRGBManager.updateZoneColor(
             deviceIndex,
             button.zoneIndex,
             effect
         )
 
+        zoneEffects[button.zoneIndex] = effect.enumTpe
         zoneCurrentEffect[button.zoneIndex] = effect
 
         if (setButtonColorHex) {
@@ -246,7 +249,6 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
     private fun handleEffectPicker(button: ZoneConfigurationButton) {
         WindowHandler.popup = EffectPickerPopup(
             { red: Int, green: Int, blue: Int, effect: EffectsEnum ->
-                zoneEffects[button.zoneIndex] = effect
 
                 when (effect) {
                     EffectsEnum.STATIC -> {
@@ -275,6 +277,9 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                             button,
                             false
                         )
+                    }
+                    EffectsEnum.BREATHING -> {
+                        setEffect(deviceIndex, BreathingEffect(60, button.colorHex), button, true)
                     }
                 }
             },
@@ -365,6 +370,14 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                         }
                         EffectsEnum.RAINBOW_WAVE -> {
                             setEffect(deviceIndex, RainbowEffect(60), button, false)
+                        }
+                        EffectsEnum.BREATHING -> {
+                            setEffect(
+                                deviceIndex,
+                                BreathingEffect(60, String.format("#%02x%02x%02x", red, green, blue)),
+                                button,
+                                true
+                            )
                         }
                     }
 
