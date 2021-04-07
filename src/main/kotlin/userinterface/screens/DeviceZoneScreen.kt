@@ -350,7 +350,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                                     val endHex =
                                         String.format("#%02x%02x%02x", endColor!!.red, endColor.green, endColor.blue)
 
-                                    setEffect(deviceIndex, GradientEffect(60, startHex, endHex), button, false)
+                                    setEffect(deviceIndex, GradientEffect(60, startHex, endHex), button, true)
                                 } else {
                                     setEffect(
                                         deviceIndex,

@@ -29,6 +29,10 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
     override var animation = true
     override var enumTpe: EffectsEnum = EffectsEnum.COLOR_GRADIENT
 
+    init {
+        colorHex = String.format("#%02x%02x%02x", startColor.red, startColor.green, startColor.blue)
+    }
+
     override var thread = Thread {
 
         originalStartColor = Color.decode(startHex)
