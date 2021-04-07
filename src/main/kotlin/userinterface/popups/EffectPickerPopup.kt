@@ -37,6 +37,9 @@ class EffectPickerPopup(
      */
     private var hoveredCancel = false
 
+    /**
+     * Whether the popup is open or not
+     */
     override var open = true
 
     /**

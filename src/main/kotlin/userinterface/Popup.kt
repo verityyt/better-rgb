@@ -7,7 +7,7 @@ import java.awt.image.ImageObserver
 abstract class Popup {
 
     /**
-     * Whether to popup is open or not
+     * Whether the popup is open or not
      */
     abstract var open: Boolean
 
