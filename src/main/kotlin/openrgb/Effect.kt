@@ -1,5 +1,7 @@
 package openrgb
 
+import java.awt.Color
+
 open class Effect {
 
     /**
@@ -21,6 +23,12 @@ open class Effect {
      * Thread of the effect *(is used to change [colorHex])*
      */
     open var thread = Thread {}
+
+    open var enumTpe: EffectsEnum = EffectsEnum.STATIC
+
+    open var originalStartColor = Color.white
+
+    open var originalEndColor = Color.white
 
     open fun start() = thread.start()
 

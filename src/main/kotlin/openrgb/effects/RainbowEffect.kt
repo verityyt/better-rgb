@@ -1,6 +1,7 @@
 package openrgb.effects
 
 import openrgb.Effect
+import openrgb.EffectsEnum
 import java.awt.Color
 
 class RainbowEffect(override val fps: Int) : Effect() {
@@ -16,6 +17,7 @@ class RainbowEffect(override val fps: Int) : Effect() {
     private var currentIndex = 0
 
     override var animation = true
+    override var enumTpe: EffectsEnum = EffectsEnum.RAINBOW_WAVE
 
     override var thread = Thread {
         generateRainbowColors()

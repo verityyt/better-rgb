@@ -1,6 +1,7 @@
 package openrgb.effects
 
 import openrgb.Effect
+import openrgb.EffectsEnum
 import java.awt.Color
 
 class GradientEffect(override val fps: Int, startHex: String, endHex: String) : Effect() {
@@ -16,8 +17,8 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
      */
     var endColor = Color.decode(endHex)
 
-    var originalStartColor = Color.white
-    var originalEndColor = Color.white
+    override var originalStartColor = Color.white
+    override var originalEndColor = Color.white
 
     /**
      * Ratio of current blend
@@ -25,6 +26,7 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
     private var ratio = 0f
 
     override var animation = true
+    override var enumTpe: EffectsEnum = EffectsEnum.COLOR_GRADIENT
 
     override var thread = Thread {
 
