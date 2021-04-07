@@ -11,7 +11,7 @@ Currently the only way to install and use **BetterRGB** is to clone this reposit
 - **Color Gradient** (Color wave between 2 colors)
 - **Rainbow Wave** (Color wave through rainbow spectrum)
 - **Breathing** (1 color breathing in and out)
-- **Flashing** (1 static color with random timed and preset colored flashes)
+- **Flashing** (1 static color with random timed and pre-set colored flashes)
 
 ### Special thanks to
 - [Adam Honse / CalcProgrammer1](https://gitlab.com/CalcProgrammer1) - Admin and developer of [OpenRGB](https://gitlab.com/CalcProgrammer1/OpenRGB)
