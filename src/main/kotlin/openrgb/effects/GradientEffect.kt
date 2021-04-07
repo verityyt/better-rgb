@@ -17,8 +17,14 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
      */
     override var endColor = Color.decode(endHex)
 
+    /**
+     * Original start color *(does not change until effect is delete)*
+     */
     override var originalStartColor = Color.white
 
+    /**
+     * Original end color *(does not change until effect is delete)*
+     */
     override var originalEndColor = Color.white
 
     /**
@@ -26,7 +32,14 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
      */
     private var ratio = 0f
 
+    /**
+     * Whether the effect is a animation or not *(static)*
+     */
     override var animation = true
+
+    /**
+     * [EffectsEnum] of the effect
+     */
     override var enumTpe: EffectsEnum = EffectsEnum.COLOR_GRADIENT
 
     init {

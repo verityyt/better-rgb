@@ -24,6 +24,9 @@ open class Effect {
      */
     open var thread = Thread {}
 
+    /**
+     * [EffectsEnum] of the effect
+     */
     open var enumTpe: EffectsEnum = EffectsEnum.STATIC
 
     open var originalStartColor: Color? = null

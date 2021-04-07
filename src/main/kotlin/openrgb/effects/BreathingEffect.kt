@@ -16,8 +16,14 @@ class BreathingEffect(override val fps: Int, startHex: String) : Effect() {
      */
     override var endColor = Color.decode("#000000")
 
+    /**
+     * Original start color *(does not change until effect is delete)*
+     */
     override var originalStartColor = Color.white
 
+    /**
+     * Original end color *(does not change until effect is delete)*
+     */
     override var originalEndColor = Color.decode("#000000")
 
     /**
@@ -25,7 +31,14 @@ class BreathingEffect(override val fps: Int, startHex: String) : Effect() {
      */
     private var ratio = 0f
 
+    /**
+     * Whether the effect is a animation or not *(static)*
+     */
     override var animation = true
+
+    /**
+     * [EffectsEnum] of the effect
+     */
     override var enumTpe: EffectsEnum = EffectsEnum.BREATHING
 
     init {

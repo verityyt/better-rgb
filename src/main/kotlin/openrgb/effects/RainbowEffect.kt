@@ -16,7 +16,14 @@ class RainbowEffect(override val fps: Int) : Effect() {
      */
     private var currentIndex = 0
 
+    /**
+     * Whether the effect is a animation or not *(static)*
+     */
     override var animation = true
+
+    /**
+     * [EffectsEnum] of the effect
+     */
     override var enumTpe: EffectsEnum = EffectsEnum.RAINBOW_WAVE
 
     override var thread = Thread {
