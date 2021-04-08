@@ -49,8 +49,10 @@ class DevicesScreen : Screen() {
                 g.drawString(
                     deviceName, if (deviceIndex <= 8) {
                         225
-                    } else {
+                    } else if (deviceIndex <= 17) {
                         660
+                    } else {
+                        1210
                     }, drawDeviceY
                 )
 
@@ -59,16 +61,20 @@ class DevicesScreen : Screen() {
                 g2.fillRoundRect(
                     if (deviceIndex <= 8) {
                         560
-                    } else {
+                    } else if (deviceIndex <= 17) {
                         990
+                    } else {
+                        1210
                     }, drawDeviceY - 25, 35, 35, 10, 10
                 )
 
                 g.drawImage(
                     ImageIO.read(File("files\\images\\devices\\configure.png")), if (deviceIndex <= 8) {
                         566
-                    } else {
+                    } else if (deviceIndex <= 17) {
                         996
+                    } else {
+                        1210
                     }, drawDeviceY - 19, 24, 24, observer
                 )
 
@@ -78,8 +84,10 @@ class DevicesScreen : Screen() {
                     DeviceConfigurationButton(
                         deviceIndex, if (deviceIndex <= 8) {
                             566
-                        } else {
+                        } else if (deviceIndex <= 17) {
                             996
+                        } else {
+                            1210
                         }, drawDeviceY - 19
                     )
                 )
@@ -88,9 +96,13 @@ class DevicesScreen : Screen() {
 
                 if (deviceIndex == 8) {
                     drawDeviceY = 175
-                } else {
+                } else if (deviceIndex <= 17) {
                     drawDeviceY += 50
+                } else {
+                    drawDeviceY = 1210
                 }
+
+
             }
 
             // Resetting drawDeviceY
@@ -139,7 +151,8 @@ class DevicesScreen : Screen() {
         for (button in deviceConfigurationButtons) {
             if (x in (button.x - 1) until (button.x + 24) && y in (button.y - 50) until (button.y)) { // Checking which configure button is clicked
                 if (WindowHandler.screen !is DeviceZoneScreen) {
-                    WindowHandler.screen = OpenRGBManager.deviceZoneScreens[button.deviceIndex] // Setting screen of clicked configure button
+                    WindowHandler.screen =
+                        OpenRGBManager.deviceZoneScreens[button.deviceIndex] // Setting screen of clicked configure button
                 }
             }
         }

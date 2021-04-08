@@ -72,8 +72,10 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             zoneColorButton[zoneIndex] = ZoneConfigurationButton(
                 zoneIndex, if (zoneIndex <= 8) {
                     566 - 125
-                } else {
+                } else if (zoneIndex <= 17) {
                     996 - 125
+                } else {
+                    1210
                 }, drawZoneY - 19
             )
 
@@ -81,6 +83,8 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
             if (zoneIndex == 8) {
                 drawZoneY = 175
+            } else if (zoneIndex == 17) {
+                drawZoneY = 1210
             } else {
                 drawZoneY += 50
             }
@@ -112,8 +116,10 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             g.drawString(
                 zoneName, if (zoneIndex <= 8) {
                     225
-                } else {
+                } else if (zoneIndex <= 17) {
                     660
+                } else {
+                    1210
                 }, drawZoneY
             )
 
@@ -130,8 +136,10 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             g2.fillRoundRect(
                 if (zoneIndex <= 8) {
                     557 - 125
-                } else {
+                } else if (zoneIndex <= 17) {
                     987 - 125
+                } else {
+                    1210
                 }, drawZoneY - 27, 35, 35, 10, 10
             )
 
@@ -139,8 +147,10 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             g2.fillRoundRect(
                 if (zoneIndex <= 8) {
                     560 - 125
-                } else {
+                } else if (zoneIndex <= 17) {
                     990 - 125
+                } else {
+                    1210
                 }, drawZoneY - 24, 29, 29, 10, 10
             )
 
@@ -152,8 +162,10 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             g.fillRoundRect(
                 if (zoneIndex <= 8) {
                     610 - 125
-                } else {
+                } else if (zoneIndex <= 17) {
                     1040 - 125
+                } else {
+                    1210
                 }, drawZoneY - 26, 100, 35, 10, 10
             )
 
@@ -162,16 +174,20 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             g.drawString(
                 "Effect", if (zoneIndex <= 8) {
                     615 - 125
-                } else {
+                } else if (zoneIndex <= 17) {
                     1045 - 125
+                } else {
+                    1210
                 }, drawZoneY
             )
 
             g.drawImage(
                 ImageIO.read(File("files\\images\\devices\\configure.png")), if (zoneIndex <= 8) {
                     615 - 60
-                } else {
+                } else if (zoneIndex <= 17) {
                     1045 - 60
+                } else {
+                    1210
                 }, drawZoneY - 20,
                 observer
             )
@@ -180,7 +196,9 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
             if (zoneIndex == 8) {
                 drawZoneY = 175
-            } else {
+            } else if(zoneIndex == 17){
+                drawZoneY = 1210
+            }else {
                 drawZoneY += 50
             }
         }
