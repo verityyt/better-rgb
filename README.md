@@ -3,8 +3,11 @@
 # BetterRGB
 Open source rgb control software based on [OpenRGB](https://gitlab.com/CalcProgrammer1/OpenRGB) and the [Java Client](https://gitlab.com/mguimard/openrgb-client).
 
-### Installation
-Currently the only way to install and use **BetterRGB** is to clone this repository yourself and run the **[main class](https://github.com/verityyt/better-rgb/blob/master/src/main/kotlin/BetterRGB.kt)**.
+### Window Installation
+Just download and run the setup file from the **[latest Release](https://github.com/verityyt/better-rgb/releases/latest)**.
+
+### Linux Installation
+Currently the only way to use **BetterRGB** on Linux is to clone this repository and build the project by yourself-
 
 ### Effects
 - **Static** (1 static color)
