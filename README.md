@@ -21,7 +21,7 @@ and simple run the **BetterRGB.jar** file by double-clicking.
 ### Requirements
 - **OpenRGB** has to be installed
 - The **SDK Server** of **OpenRGB** has to run on <code>port 6742</code>
-- At least <code>java 1.8.0_261</code> has to be installed
+- At least <code>java 15.0.1</code> has to be installed
 
 ### Special thanks to
 - [Adam Honse / CalcProgrammer1](https://gitlab.com/CalcProgrammer1) - Admin and developer of [OpenRGB](https://gitlab.com/CalcProgrammer1/OpenRGB)
