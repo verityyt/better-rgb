@@ -14,7 +14,7 @@ import javax.swing.JFrame
 
 object WindowHandler {
 
-    private lateinit var frame: JFrame
+    lateinit var frame: JFrame
 
     /**
      * Current [screen][Screen]

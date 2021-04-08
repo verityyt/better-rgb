@@ -5,6 +5,7 @@ import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Widget
+import userinterface.WindowHandler
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -98,6 +99,7 @@ class ColorSliderWidget(
 
     override fun dragMouse(x: Int, y: Int) {
         if (dragging) {
+            WindowHandler.frame.repaint()
             // Updating dotX to current drag position
 
             val target = x - this.x
