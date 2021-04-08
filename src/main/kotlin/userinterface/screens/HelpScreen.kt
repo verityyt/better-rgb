@@ -19,7 +19,7 @@ class HelpScreen : Screen() {
 
         g.font = CustomFont.regular?.deriveFont(18f)
         g.drawString("Version:", 205, 108)
-        g.drawString("v${BetterRGB.version}", 375, 108)
+        g.drawString(BetterRGB.version, 375, 108)
 
         g.drawString("Build date:", 205, 155)
         g.drawString(BetterRGB.buildDate, 375, 155)

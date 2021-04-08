@@ -6,8 +6,8 @@ import openrgb.OpenRGBManager
 
 object BetterRGB {
 
-    var version = "0.1.2"
-    var buildDate = "/"
+    var version = "1.0-BETA"
+    var buildDate = "4/8/2021"
 
     @JvmStatic
     fun main(args: Array<String>) {
