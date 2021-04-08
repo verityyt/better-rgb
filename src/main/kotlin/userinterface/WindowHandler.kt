@@ -36,14 +36,18 @@ object WindowHandler {
      */
     var hoveredSidebarItem: SidebarItem? = SidebarItem.HELP
 
+    /**
+     * [BufferedImage] that is being painted into by the **paint()** method if the [JFrame][frame]
+     */
+    var bufferedImage = BufferedImage(1200, 750, BufferedImage.TYPE_INT_BGR)
+
     fun openWindow() {
 
         frame = object : JFrame() {
             override fun paint(g: Graphics) {
                 // Create virtual environment (BufferedImage)
 
-                val bf = BufferedImage(1200, 750, BufferedImage.TYPE_INT_BGR)
-                val graphics = bf.createGraphics()
+                val graphics = bufferedImage.graphics
                 val graphics2D = graphics as Graphics2D
 
                 // Set RenderingHints
@@ -113,7 +117,7 @@ object WindowHandler {
 
                 g.color = ColorPalette.background
                 g.fillRect(0, 0, 1200, 750)
-                g.drawImage(bf, 0, 0, 1200, 750, this)
+                g.drawImage(bufferedImage, 0, 0, 1200, 750, this)
 
             }
         }
@@ -181,7 +185,7 @@ object WindowHandler {
 
         Thread {
             while (true) {
-                Thread.sleep(1000 / 60) // Repainting window/frame 60 times in a second -> 60 fps
+                Thread.sleep(1000 / 10) // Repainting window/frame 10 times in a second -> 10 fps
                 frame.repaint()
             }
         }.start()
