@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
 import java.awt.image.ImageObserver
 import java.io.File
+import java.nio.file.FileSystems
 import javax.imageio.ImageIO
 import javax.swing.JFrame
 
@@ -81,7 +82,7 @@ object WindowHandler {
 
                 if (screen == null) {
                     graphics.drawImage(
-                        ImageIO.read(File("files\\images\\logo\\logo_512.png")),
+                        ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}logo${FileSystems.getDefault().separator}logo_512.png")),
                         480,
                         175,
                         256,
@@ -171,7 +172,7 @@ object WindowHandler {
         frame.addMouseMotionListener(MouseMotionListener())
 
         frame.title = "BetterRGB | Home"
-        frame.iconImage = ImageIO.read(File("files\\images\\logo\\logo_favicon.png"))
+        frame.iconImage = ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}logo${FileSystems.getDefault().separator}logo_favicon.png"))
 
         frame.size = Dimension(1200, 750)
         frame.isResizable = false
@@ -225,7 +226,7 @@ object WindowHandler {
         )
 
         g2.drawImage(
-            ImageIO.read(File("files\\images\\sidebar\\${item.imageName}.png")), 20, when (item.index) {
+            ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}sidebar${FileSystems.getDefault().separator}${item.imageName}.png")), 20, when (item.index) {
                 0 -> {
                     155
                 }

@@ -18,6 +18,7 @@ import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.image.ImageObserver
 import java.io.File
+import java.nio.file.FileSystems
 import javax.imageio.ImageIO
 
 class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: Int) : Screen() {
@@ -182,7 +183,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             )
 
             g.drawImage(
-                ImageIO.read(File("files\\images\\devices\\configure.png")), if (zoneIndex <= 8) {
+                ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}devices${FileSystems.getDefault().separator}configure.png")), if (zoneIndex <= 8) {
                     615 - 60
                 } else if (zoneIndex <= 17) {
                     1045 - 60

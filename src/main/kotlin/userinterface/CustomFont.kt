@@ -3,6 +3,7 @@ package userinterface
 import utils.Logger
 import java.awt.*
 import java.io.File
+import java.nio.file.FileSystems
 
 object CustomFont {
 
@@ -30,7 +31,7 @@ object CustomFont {
      */
     private fun registerRegular() {
         regular =
-            Font.createFont(Font.TRUETYPE_FONT, File("files/fonts/Product-Sans-Regular.ttf"))
+            Font.createFont(Font.TRUETYPE_FONT, File("files${FileSystems.getDefault().separator}fonts${FileSystems.getDefault().separator}Product-Sans-Regular.ttf"))
         val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
         ge.registerFont(regular)
     }
@@ -40,7 +41,7 @@ object CustomFont {
      */
     private fun registerLight() {
         light =
-            Font.createFont(Font.TRUETYPE_FONT, File("files/fonts/Product-Sans-Light.ttf"))
+            Font.createFont(Font.TRUETYPE_FONT, File("files${FileSystems.getDefault().separator}fonts${FileSystems.getDefault().separator}Product-Sans-Light.ttf"))
         val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
         ge.registerFont(light)
     }
@@ -50,7 +51,7 @@ object CustomFont {
      */
     private fun registerBold() {
         bold =
-            Font.createFont(Font.TRUETYPE_FONT, File("files/fonts/Product-Sans-Bold.ttf"))
+            Font.createFont(Font.TRUETYPE_FONT, File("files${FileSystems.getDefault().separator}fonts${FileSystems.getDefault().separator}Product-Sans-Bold.ttf"))
         val ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
         ge.registerFont(bold)
     }
