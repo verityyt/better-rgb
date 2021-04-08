@@ -1,3 +1,5 @@
 # Project exclude paths
 /.gradle/
 /.idea/
+/innoSetup/setup.exe
+/launch4j/BetterRGB.exe
