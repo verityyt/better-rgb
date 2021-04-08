@@ -7,7 +7,9 @@ Open source rgb control software based on [OpenRGB](https://gitlab.com/CalcProgr
 Just download and run the setup file from the **[latest Release](https://github.com/verityyt/better-rgb/releases/latest)**.
 
 ### Linux Installation
-Currently the only way to use **BetterRGB** on Linux is to clone this repository and build the project by yourself-
+Download the **multi_platform.zip** from the **[latest Release](https://github.com/verityyt/better-rgb/releases/latest)** on GitHub,
+
+and simple run the **BetterRGB.jar** file by double-clicking.
 
 ### Effects
 - **Static** (1 static color)
