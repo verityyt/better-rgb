@@ -196,8 +196,13 @@ object OpenRGBManager {
 
                     // Sending color to rgb controller
 
+                    if (!deviceZoneLedCount.containsKey(deviceIndex)) {
+                        val zone = client.getDeviceController(deviceIndex).zones[zoneIndex]
+                        cacheZoneLedCount(deviceIndex, zoneIndex, zone)
+                    }
+
                     val colors =
-                        arrayOfNulls<OpenRGBColor>(client.getDeviceController(deviceIndex).zones[zoneIndex].ledsCount)
+                        arrayOfNulls<OpenRGBColor>(deviceZoneLedCount[deviceIndex]!![zoneIndex]!!)
                     colors.fill(OpenRGBColor.fromHexaString(effect.colorHex))
 
                     client.updateZoneLeds(deviceIndex, zoneIndex, colors)
@@ -225,7 +230,12 @@ object OpenRGBManager {
 
             // Sending color to rgb controller
 
-            val colors = arrayOfNulls<OpenRGBColor>(client.getDeviceController(deviceIndex).zones[zoneIndex].ledsCount)
+            if (!deviceZoneLedCount.containsKey(deviceIndex)) {
+                val zone = client.getDeviceController(deviceIndex).zones[zoneIndex]
+                cacheZoneLedCount(deviceIndex, zoneIndex, zone)
+            }
+
+            val colors = arrayOfNulls<OpenRGBColor>(deviceZoneLedCount[deviceIndex]!![zoneIndex]!!)
             colors.fill(OpenRGBColor.fromHexaString(effect.colorHex))
 
             client.updateZoneLeds(deviceIndex, zoneIndex, colors)
