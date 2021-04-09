@@ -130,14 +130,14 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             g.color = ColorPalette.foreground
             g.font = CustomFont.regular?.deriveFont(24f)
 
-            val tempZoneName = zoneName
+
 
             if (zoneName.length > 16) {
                 zoneName = zoneName.substring(0, 15) + "..." // Update zone name if its to long
             }
 
             deviceZonePosition[zoneIndex] = Pair(
-                tempZoneName, Rectangle(
+                deviceZones[zoneIndex]!!, Rectangle(
                     if (zoneIndex <= 8) {
                         225
                     } else if (zoneIndex <= 17) {
