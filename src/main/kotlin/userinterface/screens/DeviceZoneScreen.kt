@@ -13,6 +13,7 @@ import utils.ColorPartEnum
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
+import java.awt.Rectangle
 import java.awt.image.ImageObserver
 import java.io.File
 import java.nio.file.FileSystems
@@ -27,6 +28,18 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
      * > **Value**: ZoneName
      */
     private var deviceZones: HashMap<Int, String> = OpenRGBManager.getDeviceZones(deviceIndex)
+
+    /**
+     * List of all zones of this device with [Rectangle]
+     * **Key**: ZoneIndex
+     *
+     * **Value**: HashMap
+     *
+     * > **Key**: ZoneName
+     *
+     * > **Value**: [Pair] (x, y, w, h of text)
+     */
+    private var deviceZonePosition = HashMap<Int, Pair<String, Rectangle>>()
 
     /**
      * List of all [ZoneConfigurationButton]s of this device by zoneIndex
@@ -112,14 +125,30 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                 customName
             }
 
-            if (zoneName.length > 16) {
-                zoneName = zoneName.substring(0, 15) + "..." // Update zone name if its to long
-            }
-
             // Draw zone name
 
             g.color = ColorPalette.foreground
             g.font = CustomFont.regular?.deriveFont(24f)
+
+            val tempZoneName = zoneName
+
+            if (zoneName.length > 16) {
+                zoneName = zoneName.substring(0, 15) + "..." // Update zone name if its to long
+            }
+
+            deviceZonePosition[zoneIndex] = Pair(
+                tempZoneName, Rectangle(
+                    if (zoneIndex <= 8) {
+                        225
+                    } else if (zoneIndex <= 17) {
+                        660
+                    } else {
+                        1210
+                    }, drawZoneY - 25, g.fontMetrics.stringWidth(zoneName), 30
+                )
+            )
+
+
 
             g.drawString(
                 zoneName, if (zoneIndex <= 8) {
@@ -211,6 +240,14 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             } else {
                 drawZoneY += 50
             }
+
+            for(entry in deviceZonePosition) {
+                val rect = entry.value.second
+
+                g.color = Color.red
+                g.drawRect(rect.x, rect.y, rect.width, rect.height)
+            }
+
         }
 
         drawZoneY = 175
@@ -218,6 +255,15 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
     }
 
     override fun mouseClicked(x: Int, y: Int) {
+
+        for (entry in deviceZonePosition) {
+            val rect = entry.value.second
+
+            if (x in (rect.x)..(rect.x + rect.width) && y in (rect.y - 20)..(rect.y + rect.height)) {
+                println("Clicked at label of ${entry.value.first}")
+            }
+        }
+
         for (entry in zoneColorButton) {
             val button = entry.value
 
