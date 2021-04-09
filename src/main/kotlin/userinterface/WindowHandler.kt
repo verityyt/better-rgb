@@ -183,7 +183,7 @@ object WindowHandler {
 
         frame.size = Dimension(1200, 750)
         frame.isResizable = false
-        frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        frame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
         frame.isVisible = true
 
         Thread {
