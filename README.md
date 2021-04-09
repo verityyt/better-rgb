@@ -16,7 +16,7 @@ and simple run the **BetterRGB.jar** file by double-clicking.
 - **Color Gradient** (Color wave between 2 colors)
 - **Rainbow Wave** (Color wave through rainbow spectrum)
 - **Breathing** (1 color breathing in and out)
-- **Flashing** (1 static color with random timed and pre-set colored flashes)
+- **Flashing** (1 static color with random timed and colored flashes)
 
 ### Requirements
 - **OpenRGB** has to be installed
