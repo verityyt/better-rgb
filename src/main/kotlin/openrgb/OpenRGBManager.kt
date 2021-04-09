@@ -143,22 +143,22 @@ object OpenRGBManager {
             index++
         }
 
-        Logger.debug("Successfully fetched zones of \"${deviceByIndex[0]}#$deviceIndex\"!")
+        Logger.debug("Fetched zones of \"${deviceByIndex[0]}#$deviceIndex\"!")
 
         return result
     }
 
     fun cacheZoneLedCount(deviceIndex: Int, zoneIndex: Int, zone: OpenRGBZone) {
 
-        if (deviceZoneLedCount.containsKey(deviceIndex)) {
+        if (deviceZoneLedCount.containsKey(deviceIndex)) { // Check whether cache already contains the device
             val map = deviceZoneLedCount[deviceIndex]!!
-            if (!map.containsKey(zoneIndex)) {
+            if (!map.containsKey(zoneIndex)) { // Check if cache already contains the led count of the zone
                 Logger.trace("Caching led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device...")
 
                 map[zoneIndex] = zone.ledsCount
                 deviceZoneLedCount[deviceIndex] = map
 
-                Logger.debug("Successfully cached led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device!")
+                Logger.debug("Cached led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device!")
             }
         } else {
             Logger.trace("Caching led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device...")
@@ -167,7 +167,7 @@ object OpenRGBManager {
             map[zoneIndex] = zone.ledsCount
             deviceZoneLedCount[deviceIndex] = map
 
-            Logger.debug("Successfully cached led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device!")
+            Logger.debug("Cached led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device!")
         }
     }
 
@@ -180,16 +180,25 @@ object OpenRGBManager {
             val zoneThreads = deviceEffects[deviceIndex] as HashMap<Int, Thread>
 
             if (zoneThreads.containsKey(zoneIndex)) { // Check if a effect is already running on the zone by DeviceIndex and ZoneIndex
+                Logger.trace("Stopping old effect...")
                 zoneThreads[zoneIndex]?.stop() // Stopping current running effect of the zone
                 zoneThreads.remove(zoneIndex)
+                Logger.debug("Stopped old effect!")
             }
 
             deviceEffects[deviceIndex] = zoneThreads
         }
 
         if (effect.animation) { // Check if new effect is a animation or not *(static)*
+
+            Logger.trace(
+                "Setting ${effect.enumType.displayName} effect to ${deviceByIndex[deviceIndex]}#$zoneIndex..."
+            )
+
             val thread = Thread { // Setting up thread to set current effects color
                 effect.start()
+
+
 
                 while (true) {
                     Thread.sleep((1000 / effect.fps).toLong()) // Sleeping to make effects fps working
@@ -224,9 +233,16 @@ object OpenRGBManager {
             }
 
             thread.start() // Starting thread -> effect is running now
+
+            Logger.debug(
+                "Set ${effect.enumType.displayName} effect to ${deviceByIndex[deviceIndex]}#$zoneIndex..."
+            )
+
         } else {
             effect.start() // Starting effects thread (setting static color)
             effect.join() // Waiting for thread (doesn't need to run parallel for/on static effect)
+
+            Logger.trace("Setting ${effect.enumType.displayName} effect (${effect.colorHex}) to ${deviceByIndex[deviceIndex]}#$zoneIndex...")
 
             // Sending color to rgb controller
 
@@ -239,6 +255,8 @@ object OpenRGBManager {
             colors.fill(OpenRGBColor.fromHexaString(effect.colorHex))
 
             client.updateZoneLeds(deviceIndex, zoneIndex, colors)
+
+            Logger.debug("Set ${effect.enumType.displayName} effect (${effect.colorHex}) to ${deviceByIndex[deviceIndex]}#$zoneIndex!")
         }
     }
 
