@@ -3,6 +3,7 @@ import userinterface.WindowHandler
 import utils.Logger
 
 import openrgb.OpenRGBManager
+import userinterface.CustomLabels
 import userinterface.SystemTray
 
 object BetterRGB {
@@ -17,6 +18,8 @@ object BetterRGB {
         OpenRGBManager.connect()
 
         SystemTray.setTrayEntry()
+        CustomLabels.createFile()
+
         CustomFont.registerFonts()
         WindowHandler.openWindow()
 
