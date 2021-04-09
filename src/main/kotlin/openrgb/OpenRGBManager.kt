@@ -53,7 +53,7 @@ object OpenRGBManager {
     private var deviceEffects = HashMap<Int, HashMap<Int, Thread>>()
 
     /**
-     * Zone led count sorted by Device- and ZoneIndex
+     * [Zone][OpenRGBZone] led count sorted by Device- and ZoneIndex
      *
      * **Key**: DeviceIndex
      *
@@ -127,7 +127,7 @@ object OpenRGBManager {
      * > **Value**: ZoneName
      */
     fun getDeviceZones(deviceIndex: Int): HashMap<Int, String> {
-        Logger.debug("Fetching zones of '${deviceByIndex[deviceIndex]}#$deviceIndex'...")
+        Logger.trace("Fetching zones of \"${deviceByIndex[deviceIndex]}#$deviceIndex\"...")
 
         val device = client.getDeviceController(deviceIndex)
         val result = HashMap<Int, String>()
@@ -143,7 +143,7 @@ object OpenRGBManager {
             index++
         }
 
-        Logger.info("Successfully fetched zones of '${deviceByIndex[0]}#$deviceIndex'!")
+        Logger.debug("Successfully fetched zones of \"${deviceByIndex[0]}#$deviceIndex\"!")
 
         return result
     }
@@ -153,21 +153,21 @@ object OpenRGBManager {
         if (deviceZoneLedCount.containsKey(deviceIndex)) {
             val map = deviceZoneLedCount[deviceIndex]!!
             if (!map.containsKey(zoneIndex)) {
-                Logger.debug("Caching led count of ${zone.name} zone of ${deviceByIndex[deviceIndex]}...")
+                Logger.trace("Caching led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device...")
 
                 map[zoneIndex] = zone.ledsCount
                 deviceZoneLedCount[deviceIndex] = map
 
-                Logger.info("Successfully cached led count of ${zone.name} zone of ${deviceByIndex[deviceIndex]}!")
+                Logger.debug("Successfully cached led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device!")
             }
         } else {
-            Logger.debug("Caching led count of ${zone.name} zone of ${deviceByIndex[deviceIndex]}...")
+            Logger.trace("Caching led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device...")
 
             val map = HashMap<Int, Int>()
             map[zoneIndex] = zone.ledsCount
             deviceZoneLedCount[deviceIndex] = map
 
-            Logger.info("Successfully cached led count of ${zone.name} zone of ${deviceByIndex[deviceIndex]}!")
+            Logger.debug("Successfully cached led count of \"${zone.name}\" zone of \"${deviceByIndex[deviceIndex]}\" device!")
         }
     }
 
