@@ -6,6 +6,7 @@ import userinterface.CustomFont
 import userinterface.Popup
 import userinterface.WindowHandler
 import userinterface.widgets.ColorSliderWidget
+import utils.Logger
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -92,11 +93,17 @@ class ColorPickerPopup(
         }
 
         if (x in 979..1039 && y in 239..284) {
+            Logger.`interface`("Clicked on \"Apply\" button open ColorPickerPopup!")
+
             exec(redSlider.value, greenSlider.value, blueSlider.value)
             open = false
+
             WindowHandler.popup = null
         }else if (x in 969..1044 && y in 349..394) {
+            Logger.`interface`("Clicked on \"Cancel\" button open ColorPickerPopup!")
+
             open = false
+
             WindowHandler.popup = null
         }
 
