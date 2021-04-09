@@ -3,6 +3,7 @@ package userinterface
 import utils.setOpacity
 import userinterface.listener.MouseListener
 import userinterface.listener.MouseMotionListener
+import utils.Logger
 import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
@@ -42,6 +43,7 @@ object WindowHandler {
     var bufferedImage = BufferedImage(1200, 750, BufferedImage.TYPE_INT_BGR)
 
     fun openWindow() {
+        Logger.trace("Setting up userinterface...")
 
         frame = object : JFrame() {
             override fun paint(g: Graphics) {
@@ -138,7 +140,6 @@ object WindowHandler {
                 } else {
                     null
                 }
-
             }
         })
 
@@ -149,17 +150,18 @@ object WindowHandler {
                 val y = e.y
 
                 if (x in 21..69 && y in 156..224) {
+                    Logger.`interface`("Clicked on \"DEVICES\" sidebar item!")
                     screen = SidebarItem.DEVICES.screen
                 } else if (x in 21..69 && y in 361..431) {
                     /*screen = SidebarItem.UPDATES.screen*/
                 } else if (x in 21..69 && y in 545..585) {
+                    Logger.`interface`("Clicked on \"HELP\" sidebar item!")
                     screen = SidebarItem.HELP.screen
                 } else if (x < 70) {
                     screen = null
                 }
 
                 updateTitle()
-
             }
 
             override fun mousePressed(e: MouseEvent?) {}
@@ -176,7 +178,8 @@ object WindowHandler {
         frame.addMouseMotionListener(MouseMotionListener())
 
         frame.title = "BetterRGB | Home"
-        frame.iconImage = ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}logo${FileSystems.getDefault().separator}logo_favicon.png"))
+        frame.iconImage =
+            ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}logo${FileSystems.getDefault().separator}logo_favicon.png"))
 
         frame.size = Dimension(1200, 750)
         frame.isResizable = false
@@ -189,6 +192,8 @@ object WindowHandler {
                 frame.repaint()
             }
         }.start()
+
+        Logger.`interface`("Successfully set up userinterface!")
 
     }
 
@@ -230,7 +235,9 @@ object WindowHandler {
         )
 
         g2.drawImage(
-            ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}sidebar${FileSystems.getDefault().separator}${item.imageName}.png")), 20, when (item.index) {
+            ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}sidebar${FileSystems.getDefault().separator}${item.imageName}.png")),
+            20,
+            when (item.index) {
                 0 -> {
                     155
                 }
@@ -240,11 +247,14 @@ object WindowHandler {
                 else -> {
                     545
                 }
-            }, 50, if (item == SidebarItem.UPDATES) {
+            },
+            50,
+            if (item == SidebarItem.UPDATES) {
                 40
             } else {
                 50
-            }, observer
+            },
+            observer
         )
     }
 

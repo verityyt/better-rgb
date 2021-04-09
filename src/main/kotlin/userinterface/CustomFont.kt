@@ -17,13 +17,13 @@ object CustomFont {
      * [registerRegular], [registerLight], [registerBold]
      */
     fun registerFonts() {
-        Logger.debug("Registering fonts...")
+        Logger.trace("Registering fonts...")
 
         registerRegular()
         registerLight()
         registerBold()
 
-        Logger.info("Registered Fonts!")
+        Logger.`interface`("Registered Fonts!")
     }
 
     /**
