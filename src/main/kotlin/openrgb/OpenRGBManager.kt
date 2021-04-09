@@ -2,6 +2,7 @@ package openrgb
 
 import io.gitlab.mguimard.openrgb.client.OpenRGBClient
 import io.gitlab.mguimard.openrgb.entity.OpenRGBColor
+import io.gitlab.mguimard.openrgb.entity.OpenRGBZone
 import userinterface.screens.DeviceZoneScreen
 import utils.Logger
 import java.lang.Exception
@@ -50,6 +51,18 @@ object OpenRGBManager {
      * > **Value**:  Zone effects [thread][Effect.thread]
      */
     private var deviceEffects = HashMap<Int, HashMap<Int, Thread>>()
+
+    /**
+     * Zone led count sorted by Device- and ZoneIndex
+     *
+     * **Key**: DeviceIndex
+     *
+     * **Value**: HashMap
+     * > **Key**: ZoneIndex
+     *
+     * > **Value**:  Led count of zone
+     */
+    private var deviceZoneLedCount = HashMap<Int, HashMap<Int, Int>>()
 
     fun connect() {
         Logger.debug("Trying to connect to OpenRGB...")
@@ -124,6 +137,8 @@ object OpenRGBManager {
             var name = zone.name
             name = name.substring(0, name.length - 1)
 
+            cacheZoneLedCount(deviceIndex, index, zone)
+
             result[index] = name
             index++
         }
@@ -131,6 +146,29 @@ object OpenRGBManager {
         Logger.info("Successfully fetched zones of '${deviceByIndex[0]}#$deviceIndex'!")
 
         return result
+    }
+
+    fun cacheZoneLedCount(deviceIndex: Int, zoneIndex: Int, zone: OpenRGBZone) {
+
+        if (deviceZoneLedCount.containsKey(deviceIndex)) {
+            val map = deviceZoneLedCount[deviceIndex]!!
+            if (!map.containsKey(zoneIndex)) {
+                Logger.debug("Caching led count of ${zone.name} zone of ${deviceByIndex[deviceIndex]}...")
+
+                map[zoneIndex] = zone.ledsCount
+                deviceZoneLedCount[deviceIndex] = map
+
+                Logger.info("Successfully cached led count of ${zone.name} zone of ${deviceByIndex[deviceIndex]}!")
+            }
+        } else {
+            Logger.debug("Caching led count of ${zone.name} zone of ${deviceByIndex[deviceIndex]}...")
+
+            val map = HashMap<Int, Int>()
+            map[zoneIndex] = zone.ledsCount
+            deviceZoneLedCount[deviceIndex] = map
+
+            Logger.info("Successfully cached led count of ${zone.name} zone of ${deviceByIndex[deviceIndex]}!")
+        }
     }
 
     /**
