@@ -5,6 +5,8 @@ import java.util.*
 
 object Logger {
 
+    private val enableDebug = true
+
     private fun getFormattedTime() =  SimpleDateFormat("HH:mm:ss").format(Date())
 
     private const val reset = "\u001B[0m"
@@ -28,7 +30,9 @@ object Logger {
     }
 
     fun debug(msg: String) {
-        println("$grey[${getFormattedTime()}]: [${cyan}DEBUG$grey] $reset$msg")
+        if(enableDebug) {
+            println("$grey[${getFormattedTime()}]: [${cyan}DEBUG$grey] $reset$msg")
+        }
     }
 
 
