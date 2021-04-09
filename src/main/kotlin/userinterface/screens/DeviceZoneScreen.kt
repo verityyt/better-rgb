@@ -10,6 +10,7 @@ import utils.setOpacity
 import userinterface.popups.ColorPickerPopup
 import userinterface.popups.EffectPickerPopup
 import utils.ColorPartEnum
+import utils.Logger
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -260,7 +261,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             val rect = entry.value.second
 
             if (x in (rect.x)..(rect.x + rect.width) && y in (rect.y - 20)..(rect.y + rect.height)) {
-                println("Clicked at label of ${entry.value.first}")
+                Logger.`interface`("Clicked at label of \"${entry.value.first}\"!")
             }
         }
 
