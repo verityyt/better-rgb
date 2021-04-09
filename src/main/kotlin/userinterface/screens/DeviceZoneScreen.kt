@@ -4,12 +4,9 @@ import openrgb.Effect
 import openrgb.EffectsEnum
 import openrgb.OpenRGBManager
 import openrgb.effects.*
+import userinterface.*
 import utils.resetOpacity
 import utils.setOpacity
-import userinterface.ColorPalette
-import userinterface.CustomFont
-import userinterface.Screen
-import userinterface.WindowHandler
 import userinterface.popups.ColorPickerPopup
 import userinterface.popups.EffectPickerPopup
 import utils.ColorPartEnum
@@ -62,10 +59,15 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
     init {
         for (zoneIndex in 0 until deviceZones.size) {
-            var zoneName = deviceZones[zoneIndex]!!
+            val customName = CustomLabels.getLabel(deviceName, zoneIndex.toString())
+            var zoneName = if (customName == "") {
+                deviceZones[zoneIndex]!!
+            } else {
+                customName
+            }
 
-            if (zoneName.length > 25) {
-                zoneName = zoneName.substring(0, 23) + "..." // Update zone name if its to long
+            if (zoneName.length > 16) {
+                zoneName = zoneName.substring(0, 15) + "..." // Update zone name if its to long
             }
 
             // Save ZoneConfigurationButton in zoneColorButton by zoneIndex
@@ -103,10 +105,15 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
         g.drawString("$deviceName:", 175, 125)
 
         for (zoneIndex in 0 until deviceZones.size) {
-            var zoneName = deviceZones[zoneIndex]!!
+            val customName = CustomLabels.getLabel(deviceName, zoneIndex.toString())
+            var zoneName = if (customName == "") {
+                deviceZones[zoneIndex]!!
+            } else {
+                customName
+            }
 
-            if (zoneName.length > 25) {
-                zoneName = zoneName.substring(0, 23) + "..." // Update zone name if its to long
+            if (zoneName.length > 16) {
+                zoneName = zoneName.substring(0, 15) + "..." // Update zone name if its to long
             }
 
             // Draw zone name
@@ -183,13 +190,15 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             )
 
             g.drawImage(
-                ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}devices${FileSystems.getDefault().separator}configure.png")), if (zoneIndex <= 8) {
+                ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}devices${FileSystems.getDefault().separator}configure.png")),
+                if (zoneIndex <= 8) {
                     615 - 60
                 } else if (zoneIndex <= 17) {
                     1045 - 60
                 } else {
                     1210
-                }, drawZoneY - 20,
+                },
+                drawZoneY - 20,
                 observer
             )
 
@@ -197,9 +206,9 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
             if (zoneIndex == 8) {
                 drawZoneY = 175
-            } else if(zoneIndex == 17){
+            } else if (zoneIndex == 17) {
                 drawZoneY = 1210
-            }else {
+            } else {
                 drawZoneY += 50
             }
         }
