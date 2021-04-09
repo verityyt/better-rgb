@@ -27,7 +27,7 @@ open class Effect {
     /**
      * [EffectsEnum] of the effect
      */
-    open var enumTpe: EffectsEnum = EffectsEnum.STATIC
+    open var enumType: EffectsEnum = EffectsEnum.STATIC
 
     open var originalStartColor: Color? = null
 

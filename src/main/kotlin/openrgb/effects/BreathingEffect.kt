@@ -39,7 +39,7 @@ class BreathingEffect(override val fps: Int, startHex: String) : Effect() {
     /**
      * [EffectsEnum] of the effect
      */
-    override var enumTpe: EffectsEnum = EffectsEnum.BREATHING
+    override var enumType: EffectsEnum = EffectsEnum.BREATHING
 
     init {
         colorHex = String.format("#%02x%02x%02x", startColor.red, startColor.green, startColor.blue)

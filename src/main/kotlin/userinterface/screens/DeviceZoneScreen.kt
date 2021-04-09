@@ -251,7 +251,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             effect
         )
 
-        zoneEffects[button.zoneIndex] = effect.enumTpe
+        zoneEffects[button.zoneIndex] = effect.enumType
         zoneCurrentEffect[button.zoneIndex] = effect
 
         if (setButtonColorHex) {
@@ -329,7 +329,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
         } else {
             val effect = zoneCurrentEffect[button.zoneIndex]!!
 
-            if (effect.enumTpe.needSecondary) {
+            if (effect.enumType.needSecondary) {
                 if (effect.originalEndColor != null) {
                     when (colorPart) {
                         ColorPartEnum.RED -> return effect.originalEndColor!!.red

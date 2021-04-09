@@ -40,7 +40,7 @@ class GradientEffect(override val fps: Int, startHex: String, endHex: String) : 
     /**
      * [EffectsEnum] of the effect
      */
-    override var enumTpe: EffectsEnum = EffectsEnum.COLOR_GRADIENT
+    override var enumType: EffectsEnum = EffectsEnum.COLOR_GRADIENT
 
     init {
         colorHex = String.format("#%02x%02x%02x", startColor.red, startColor.green, startColor.blue)

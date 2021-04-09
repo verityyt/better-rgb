@@ -24,7 +24,7 @@ class RainbowEffect(override val fps: Int) : Effect() {
     /**
      * [EffectsEnum] of the effect
      */
-    override var enumTpe: EffectsEnum = EffectsEnum.RAINBOW_WAVE
+    override var enumType: EffectsEnum = EffectsEnum.RAINBOW_WAVE
 
     override var thread = Thread {
         generateRainbowColors()

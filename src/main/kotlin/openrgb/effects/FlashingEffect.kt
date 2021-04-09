@@ -38,7 +38,7 @@ class FlashingEffect(override val fps: Int, startHex: String, endHex: String) : 
     /**
      * [EffectsEnum] of the effect
      */
-    override var enumTpe: EffectsEnum = EffectsEnum.FLASHING
+    override var enumType: EffectsEnum = EffectsEnum.FLASHING
 
     init {
         colorHex = String.format("#%02x%02x%02x", startColor.red, startColor.green, startColor.blue)
