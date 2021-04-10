@@ -28,8 +28,8 @@
     <txtFileVersion>1.0.0.0</txtFileVersion>
     <fileDescription>Open source rgb control software</fileDescription>
     <copyright>verity</copyright>
-    <productVersion>1.0.0.0</productVersion>
-    <txtProductVersion>1.0.0.0</txtProductVersion>
+    <productVersion>1.1.0.0</productVersion>
+    <txtProductVersion>1.1.0.0</txtProductVersion>
     <productName>BetterRGB</productName>
     <companyName>Verity Network</companyName>
     <internalName>BetterRGB</internalName>
