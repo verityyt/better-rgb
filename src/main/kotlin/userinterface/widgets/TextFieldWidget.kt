@@ -5,10 +5,8 @@ import utils.setOpacity
 import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Widget
-import userinterface.WindowHandler
 import utils.Logger
 import java.awt.BasicStroke
-import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.image.ImageObserver
@@ -23,13 +21,19 @@ class TextFieldWidget(
 ) : Widget() {
 
     /**
-     * Whether the slider is available or not *(disabled)*
+     * Whether the TextField is available or not *(disabled)*
      */
     var available = true
 
+    /**
+     * Whether the TextField is focused or not
+     */
     var focused = false
 
-    var input = preview
+    /**
+     * Current content of TextField
+     */
+    var content = preview
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
 
@@ -52,7 +56,7 @@ class TextFieldWidget(
 
         g2.color = ColorPalette.foreground
         g2.font = CustomFont.regular?.deriveFont(18f)
-        g2.drawString(input, x + 5, y + 21)
+        g2.drawString(content, x + 5, y + 21)
 
 
     }
@@ -79,10 +83,10 @@ class TextFieldWidget(
     override fun keyReleased(char: Char, keyCode: Int) {
         if (focused && allowedKeyCodes.contains(keyCode)) {
             if (keyCode == 8) {
-                input = input.substring(0, input.length - 1)
+                content = content.substring(0, content.length - 1)
             } else {
-                if (input.length < 36) {
-                    input += char.toString()
+                if (content.length < 36) {
+                    content += char.toString()
                 }
             }
         }
