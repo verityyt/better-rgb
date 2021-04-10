@@ -5,7 +5,7 @@ import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Popup
 import userinterface.WindowHandler
-import userinterface.widgets.ColorSliderWidget
+import userinterface.widgets.SliderWidget
 import utils.Logger
 import java.awt.Color
 import java.awt.Graphics
@@ -19,9 +19,9 @@ class ColorPickerPopup(
     oldBlue: Int = 0
 ) : Popup() {
 
-    private var redSlider = ColorSliderWidget(385, 275, Color.red, "R", oldRed)
-    private var greenSlider = ColorSliderWidget(385, 315, Color.green, "G", oldGreen)
-    private var blueSlider = ColorSliderWidget(385, 355, Color.blue, "B", oldBlue)
+    private var redSlider = SliderWidget(385, 275, Color.red, "R", oldRed, 0, 255)
+    private var greenSlider = SliderWidget(385, 315, Color.green, "G", oldGreen, 0, 255)
+    private var blueSlider = SliderWidget(385, 355, Color.blue, "B", oldBlue, 0, 255)
 
     private var widgets = listOf(redSlider, greenSlider, blueSlider)
 
@@ -99,7 +99,7 @@ class ColorPickerPopup(
             open = false
 
             WindowHandler.popup = null
-        }else if (x in 969..1044 && y in 349..394) {
+        } else if (x in 969..1044 && y in 349..394) {
             Logger.`interface`("Clicked on \"Cancel\" button open ColorPickerPopup!")
 
             open = false
