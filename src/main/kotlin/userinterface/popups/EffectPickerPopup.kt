@@ -7,7 +7,7 @@ import userinterface.ColorPalette
 import userinterface.CustomFont
 import userinterface.Popup
 import userinterface.WindowHandler
-import userinterface.widgets.ColorSliderWidget
+import userinterface.widgets.SliderWidget
 import utils.Logger
 import java.awt.Color
 import java.awt.Graphics
@@ -16,18 +16,20 @@ import java.awt.Rectangle
 import java.awt.image.ImageObserver
 
 class EffectPickerPopup(
-    val exec: (red: Int, green: Int, blue: Int, effect: EffectsEnum) -> Unit,
+    val exec: (red: Int, green: Int, blue: Int, speed: Int, effect: EffectsEnum) -> Unit,
     oldEffect: EffectsEnum = EffectsEnum.STATIC,
     oldRed: Int = 0,
     oldGreen: Int = 0,
-    oldBlue: Int = 0
+    oldBlue: Int = 0,
+    oldSpeed: Int = 0
 ) : Popup() {
 
-    private var redSlider = ColorSliderWidget(385, 275, Color.red, "R", oldRed)
-    private var greenSlider = ColorSliderWidget(385, 315, Color.green, "G", oldGreen)
-    private var blueSlider = ColorSliderWidget(385, 355, Color.blue, "B", oldBlue)
+    private var redSlider = SliderWidget(385, 275, Color.red, "R", oldRed, 0, 255)
+    private var greenSlider = SliderWidget(385, 315, Color.green, "G", oldGreen, 0, 255)
+    private var blueSlider = SliderWidget(385, 355, Color.blue, "B", oldBlue, 0, 255)
+    private var speedSlider = SliderWidget(385, 395, Color.white, "S", oldSpeed, 1, 255)
 
-    private var widgets = listOf(redSlider, greenSlider, blueSlider)
+    private var colorWidgets = listOf(redSlider, greenSlider, blueSlider)
 
     /**
      * Whether the **<code>Apply</code> button** is hovered or not
@@ -57,14 +59,14 @@ class EffectPickerPopup(
 
         if (open) {
             g.color = Color.decode("#555555")
-            g.fillRoundRect(250 - 50, 220 + 30, 850, 200, 25, 25)
+            g.fillRoundRect(250 - 50, 220 + 30, 850, 250, 25, 25)
 
             if (effect.needSecondary) {
                 g2.resetOpacity()
 
-                for (widget in widgets) {
+                for (widget in colorWidgets) {
                     widget.paint(g, g2, observer)
-                    widget.available = true // Enabling color slider if secondary color is needed
+                    widget.available = true // Enabling color sliders if secondary color is needed
                 }
 
                 // Preview
@@ -75,12 +77,11 @@ class EffectPickerPopup(
                 g.color = Color(redSlider.value, greenSlider.value, blueSlider.value)
                 g.fillRoundRect(225, 275, 100, 100, 25, 25)
 
-
             } else {
 
-                for (widget in widgets) {
+                for (widget in colorWidgets) {
                     widget.paint(g, g2, observer)
-                    widget.available = false // Disabling color slider if secondary color is NOT needed
+                    widget.available = false // Disabling color sliders if secondary color is NOT needed
                 }
 
                 // Preview
@@ -93,6 +94,9 @@ class EffectPickerPopup(
                 g2.fillRoundRect(225, 275, 100, 100, 25, 25)
 
             }
+
+            speedSlider.paint(g, g2, observer)
+            speedSlider.available = effect.needSpeed
 
             // Apply Button
 
@@ -118,7 +122,7 @@ class EffectPickerPopup(
                     0.6f
                 }
             )
-            g2.drawString("Cancel", 970, 430)
+            g2.drawString("Cancel", 970, 480)
 
             // Effects
 
@@ -135,9 +139,9 @@ class EffectPickerPopup(
 
                 val rectWidth = g.fontMetrics.stringWidth(effect.displayName) + 10
 
-                g.fillRoundRect(drawEffectX, 400, rectWidth, 35, 10, 10)
+                g.fillRoundRect(drawEffectX, 450, rectWidth, 35, 10, 10)
 
-                effectRects[effect] = Rectangle(drawEffectX, 400, rectWidth, 35)
+                effectRects[effect] = Rectangle(drawEffectX, 450, rectWidth, 35)
 
                 g.color = if (effect == this.effect) {
                     ColorPalette.background
@@ -145,7 +149,7 @@ class EffectPickerPopup(
                     ColorPalette.foreground
                 }
 
-                g.drawString(effect.displayName, drawEffectX + 5, 400 + 25)
+                g.drawString(effect.displayName, drawEffectX + 5, 450 + 25)
 
                 drawEffectX += rectWidth + 10
 
@@ -158,19 +162,23 @@ class EffectPickerPopup(
 
     override fun mouseClicked(x: Int, y: Int) {
         if (effect.needSecondary) {
-            for (widget in widgets) {
+            for (widget in colorWidgets) {
                 widget.mouseClicked(x, y)
             }
+        }
+
+        if (effect.needSpeed) {
+            speedSlider.mouseClicked(x, y)
         }
 
         if (x in 979..1039 && y in 239..284) {
             Logger.`interface`("Clicked on \"Apply\" button open ColorPickerPopup!")
 
-            exec(redSlider.value, greenSlider.value, blueSlider.value, effect)
+            exec(redSlider.value, greenSlider.value, blueSlider.value, speedSlider.value, effect)
             open = false
 
             WindowHandler.popup = null
-        } else if (x in 969..1044 && y in 379..484) {
+        } else if (x in 969..1044 && y in 429..534) {
             Logger.`interface`("Clicked on \"Cancel\" button open ColorPickerPopup!")
 
             open = false
@@ -193,27 +201,40 @@ class EffectPickerPopup(
 
     override fun mouseMoved(x: Int, y: Int) {
         if (effect.needSecondary) {
-            for (widget in widgets) {
+            for (widget in colorWidgets) {
                 widget.mouseMoved(x, y)
             }
         }
 
+        if (effect.needSpeed) {
+            speedSlider.mouseMoved(x, y)
+        }
+
         hoveredApply = (x in 979..1039 && y in 239..284)
-        hoveredCancel = (x in 969..1044 && y in 379..484)
+        hoveredCancel = (x in 969..1044 && y in 429..534)
     }
 
     override fun dragMouse(x: Int, y: Int) {
         if (effect.needSecondary) {
-            for (widget in widgets) {
+            for (widget in colorWidgets) {
                 widget.dragMouse(x, y)
             }
+        }
+
+        if (effect.needSpeed) {
+            speedSlider.dragMouse(x, y)
         }
     }
 
     override fun mousePressed(x: Int, y: Int) {
-        for (widget in widgets) {
+        for (widget in colorWidgets) {
             widget.mousePressed(x, y)
         }
+
+        if (effect.needSpeed) {
+            speedSlider.mousePressed(x, y)
+        }
+
     }
 
     override fun keyReleased(char: Char, keyCode: Int) {}

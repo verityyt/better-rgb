@@ -323,7 +323,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
      */
     private fun handleEffectPicker(button: ZoneConfigurationButton) {
         WindowHandler.popup = EffectPickerPopup(
-            { red: Int, green: Int, blue: Int, effect: EffectsEnum ->
+            { red: Int, green: Int, blue: Int, speed: Int, effect: EffectsEnum ->
 
                 when (effect) {
                     EffectsEnum.STATIC -> {
@@ -337,7 +337,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                         setEffect(
                             deviceIndex,
                             GradientEffect(
-                                60,
+                                speed,
                                 zoneColorButton[button.zoneIndex]!!.colorHex,
                                 String.format("#%02x%02x%02x", red, green, blue)
                             ),
@@ -348,19 +348,19 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                     EffectsEnum.RAINBOW_WAVE -> {
                         setEffect(
                             deviceIndex,
-                            RainbowEffect(60),
+                            RainbowEffect(speed),
                             button,
                             false
                         )
                     }
                     EffectsEnum.BREATHING -> {
-                        setEffect(deviceIndex, BreathingEffect(60, button.colorHex), button, true)
+                        setEffect(deviceIndex, BreathingEffect(speed, button.colorHex), button, true)
                     }
                     EffectsEnum.FLASHING -> {
                         setEffect(
                             deviceIndex,
                             FlashingEffect(
-                                60,
+                                speed,
                                 zoneColorButton[button.zoneIndex]!!.colorHex,
                                 String.format("#%02x%02x%02x", red, green, blue)
                             ),
@@ -373,12 +373,13 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             zoneEffects[button.zoneIndex] ?: EffectsEnum.STATIC,
             getOldColorForPart(button, ColorPartEnum.RED),
             getOldColorForPart(button, ColorPartEnum.GREEN),
-            getOldColorForPart(button, ColorPartEnum.BLUE)
+            getOldColorForPart(button, ColorPartEnum.BLUE),
+            getOldEffectSpeed(button)
         )
     }
 
     /**
-     * @return The which int has to be passed to [EffectPickerPopup] as old[{COLOR_NAME}][ColorPartEnum]
+     * @return Which int has to be passed to [EffectPickerPopup] as old[{COLOR_NAME}][ColorPartEnum]
      *
      * by **ZoneIndex** and **[ColorPartEnum]**
      */
@@ -404,6 +405,25 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
         }
 
         return 0
+    }
+
+    /**
+     * @return Which int has to be passed to [EffectPickerPopup] as speed by **ZoneIndex**
+     */
+    private fun getOldEffectSpeed(button: ZoneConfigurationButton): Int {
+        if (zoneCurrentEffect[button.zoneIndex] == null) {
+            return 1
+        } else {
+            val effect = zoneCurrentEffect[button.zoneIndex]!!
+
+            if (effect.enumType.needSpeed) {
+                return effect.fps
+            } else {
+                return 1
+            }
+        }
+
+        return 1
     }
 
     private fun handleColorPicker(button: ZoneConfigurationButton) {
