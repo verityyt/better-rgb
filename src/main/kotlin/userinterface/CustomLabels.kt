@@ -18,14 +18,14 @@ object CustomLabels {
         }
     }
 
-    fun getLabel(deviceName: String, zoneIndex: String): String {
+    fun getLabel(deviceName: String, zoneIndex: Int): String {
         val json = JSONParser().parse(file.readText()) as JSONObject
 
         return if (json.containsKey(deviceName)) {
             val jsonObject = json[deviceName]!! as JSONObject
 
-            if (jsonObject.containsKey(zoneIndex)) {
-                jsonObject[zoneIndex] as String
+            if (jsonObject.containsKey(zoneIndex.toString())) {
+                jsonObject[zoneIndex.toString()] as String
             } else {
                 ""
             }
@@ -34,16 +34,16 @@ object CustomLabels {
         }
     }
 
-    fun saveLabel(deviceName: String, zoneIndex: String, customName: String) {
+    fun saveLabel(deviceName: String, zoneIndex: Int, customName: String) {
         val json = JSONParser().parse(file.readText()) as JSONObject
 
         if (json.containsKey(deviceName)) {
             val jsonObject = json[deviceName] as JSONObject
-            jsonObject[zoneIndex] = customName
+            jsonObject[zoneIndex.toString()] = customName
             json[deviceName] = jsonObject
         } else {
             val jsonObject = JSONObject()
-            jsonObject[zoneIndex] = customName
+            jsonObject[zoneIndex.toString()] = customName
             json[deviceName] = jsonObject
         }
 
