@@ -94,6 +94,7 @@ class TextFieldWidget(
 
     private var allowedKeyCodes = listOf(
         8,
+        32,
         44,
         45,
         46,
