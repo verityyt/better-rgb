@@ -4,18 +4,18 @@ import openrgb.Effect
 import openrgb.EffectsEnum
 import openrgb.OpenRGBManager
 import openrgb.effects.*
+import userinterface.*
 import utils.resetOpacity
 import utils.setOpacity
-import userinterface.ColorPalette
-import userinterface.CustomFont
-import userinterface.Screen
-import userinterface.WindowHandler
 import userinterface.popups.ColorPickerPopup
+import userinterface.popups.CustomLabelPopup
 import userinterface.popups.EffectPickerPopup
 import utils.ColorPartEnum
+import utils.Logger
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
+import java.awt.Rectangle
 import java.awt.image.ImageObserver
 import java.io.File
 import java.nio.file.FileSystems
@@ -30,6 +30,19 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
      * > **Value**: ZoneName
      */
     private var deviceZones: HashMap<Int, String> = OpenRGBManager.getDeviceZones(deviceIndex)
+
+    /**
+     * List of all zones of this device with [Rectangle]
+     *
+     * **Key**: ZoneIndex
+     *
+     * **Value**: HashMap
+     *
+     * > **Key**: ZoneName
+     *
+     * > **Value**: [Pair] (x, y, w, h of text)
+     */
+    private var deviceZonePosition = HashMap<Int, Pair<String, Rectangle>>()
 
     /**
      * List of all [ZoneConfigurationButton]s of this device by zoneIndex
@@ -61,11 +74,20 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
     private var drawZoneY = 175
 
     init {
-        for (zoneIndex in 0 until deviceZones.size) {
-            var zoneName = deviceZones[zoneIndex]!!
+        updateCustomLabels()
+    }
 
-            if (zoneName.length > 25) {
-                zoneName = zoneName.substring(0, 23) + "..." // Update zone name if its to long
+    private fun updateCustomLabels() {
+        for (zoneIndex in 0 until deviceZones.size) {
+            val customName = CustomLabels.getLabel(deviceName, zoneIndex)
+            var zoneName = if (customName == "") {
+                deviceZones[zoneIndex]!!
+            } else {
+                customName
+            }
+
+            if (zoneName.length > 16) {
+                zoneName = zoneName.substring(0, 15) + "..." // Update zone name if its to long
             }
 
             // Save ZoneConfigurationButton in zoneColorButton by zoneIndex
@@ -103,16 +125,37 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
         g.drawString("$deviceName:", 175, 125)
 
         for (zoneIndex in 0 until deviceZones.size) {
-            var zoneName = deviceZones[zoneIndex]!!
-
-            if (zoneName.length > 25) {
-                zoneName = zoneName.substring(0, 23) + "..." // Update zone name if its to long
+            val customName = CustomLabels.getLabel(deviceName, zoneIndex)
+            var zoneName = if (customName == "") {
+                deviceZones[zoneIndex]!!
+            } else {
+                customName
             }
 
             // Draw zone name
 
             g.color = ColorPalette.foreground
             g.font = CustomFont.regular?.deriveFont(24f)
+
+
+
+            if (zoneName.length > 16) {
+                zoneName = zoneName.substring(0, 15) + "..." // Update zone name if its to long
+            }
+
+            deviceZonePosition[zoneIndex] = Pair(
+                deviceZones[zoneIndex]!!, Rectangle(
+                    if (zoneIndex <= 8) {
+                        225
+                    } else if (zoneIndex <= 17) {
+                        660
+                    } else {
+                        1210
+                    }, drawZoneY - 25, g.fontMetrics.stringWidth(zoneName), 30
+                )
+            )
+
+
 
             g.drawString(
                 zoneName, if (zoneIndex <= 8) {
@@ -183,13 +226,15 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
             )
 
             g.drawImage(
-                ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}devices${FileSystems.getDefault().separator}configure.png")), if (zoneIndex <= 8) {
+                ImageIO.read(File("files${FileSystems.getDefault().separator}images${FileSystems.getDefault().separator}devices${FileSystems.getDefault().separator}configure.png")),
+                if (zoneIndex <= 8) {
                     615 - 60
                 } else if (zoneIndex <= 17) {
                     1045 - 60
                 } else {
                     1210
-                }, drawZoneY - 20,
+                },
+                drawZoneY - 20,
                 observer
             )
 
@@ -197,11 +242,12 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
             if (zoneIndex == 8) {
                 drawZoneY = 175
-            } else if(zoneIndex == 17){
+            } else if (zoneIndex == 17) {
                 drawZoneY = 1210
-            }else {
+            } else {
                 drawZoneY += 50
             }
+
         }
 
         drawZoneY = 175
@@ -209,6 +255,19 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
     }
 
     override fun mouseClicked(x: Int, y: Int) {
+
+        for (entry in deviceZonePosition) {
+            val rect = entry.value.second
+
+            if (x in (rect.x)..(rect.x + rect.width) && y in (rect.y - 20)..(rect.y + rect.height) && WindowHandler.popup == null) {
+                Logger.`interface`("Clicked at label of \"${entry.value.first}\"!")
+                WindowHandler.popup = CustomLabelPopup({ input: String ->
+                    CustomLabels.saveLabel(deviceName, entry.key, input)
+                    updateCustomLabels()
+                }, entry.value.first)
+            }
+        }
+
         for (entry in zoneColorButton) {
             val button = entry.value
 

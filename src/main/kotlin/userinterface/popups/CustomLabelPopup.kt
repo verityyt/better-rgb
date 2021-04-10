@@ -1,29 +1,22 @@
 package userinterface.popups
 
+import userinterface.*
 import utils.setOpacity
-import userinterface.ColorPalette
-import userinterface.CustomFont
-import userinterface.Popup
-import userinterface.WindowHandler
-import userinterface.widgets.ColorSliderWidget
+import userinterface.widgets.TextFieldWidget
 import utils.Logger
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.image.ImageObserver
 
-class ColorPickerPopup(
-    val exec: (red: Int, green: Int, blue: Int) -> Unit,
-    oldRed: Int = 0,
-    oldGreen: Int = 0,
-    oldBlue: Int = 0
+class CustomLabelPopup(
+    val exec: (input: String) -> Unit,
+    private val zoneName: String
 ) : Popup() {
 
-    private var redSlider = ColorSliderWidget(385, 275, Color.red, "R", oldRed)
-    private var greenSlider = ColorSliderWidget(385, 315, Color.green, "G", oldGreen)
-    private var blueSlider = ColorSliderWidget(385, 355, Color.blue, "B", oldBlue)
+    var textField = TextFieldWidget(340, 290, 550, 30, zoneName, "Custom Label | $zoneName")
 
-    private var widgets = listOf(redSlider, greenSlider, blueSlider)
+    private var widgets = listOf<Widget>(textField)
 
     /**
      * Whether the **<code>Apply</code> button** is hovered or not
@@ -41,22 +34,18 @@ class ColorPickerPopup(
     override var open = true
 
     override fun paint(g: Graphics, g2: Graphics2D, observer: ImageObserver) {
-
         if (open) {
             g.color = Color.decode("#555555")
-            g.fillRoundRect(250 - 50, 220 + 30, 850, 160, 25, 25)
+            g.fillRoundRect(300, 230, 650, 150, 25, 25)
 
             for (widget in widgets) {
                 widget.paint(g, g2, observer)
             }
 
-            // Preview
-
-            g.color = ColorPalette.foreground
-            g.fillRoundRect(220, 270, 110, 110, 25, 25)
-
-            g.color = Color(redSlider.value, greenSlider.value, blueSlider.value)
-            g.fillRoundRect(225, 275, 100, 100, 25, 25)
+            // Title
+            g2.color = ColorPalette.foreground
+            g2.font = CustomFont.regular?.deriveFont(22f)
+            g2.drawString("Set custom label for $zoneName:", 315, 260)
 
             // Apply button
 
@@ -70,7 +59,7 @@ class ColorPickerPopup(
             )
 
             g2.font = CustomFont.light?.deriveFont(24f)
-            g2.drawString("Apply", 980, 280)
+            g2.drawString("Apply", 875, 260)
 
             // Cancel button
 
@@ -82,7 +71,7 @@ class ColorPickerPopup(
                     0.6f
                 }
             )
-            g2.drawString("Cancel", 970, 390)
+            g2.drawString("Cancel", 865, 360)
 
         }
     }
@@ -92,14 +81,14 @@ class ColorPickerPopup(
             widget.mouseClicked(x, y)
         }
 
-        if (x in 979..1039 && y in 239..284) {
+        if (x in 875..936 && y in 220..260) {
             Logger.`interface`("Clicked on \"Apply\" button open ColorPickerPopup!")
 
-            exec(redSlider.value, greenSlider.value, blueSlider.value)
+            exec(textField.content)
             open = false
 
             WindowHandler.popup = null
-        }else if (x in 969..1044 && y in 349..394) {
+        } else if (x in 865..926 && y in 320..360) {
             Logger.`interface`("Clicked on \"Cancel\" button open ColorPickerPopup!")
 
             open = false
@@ -114,23 +103,19 @@ class ColorPickerPopup(
             widget.mouseMoved(x, y)
         }
 
-        hoveredApply = (x in 979..1039 && y in 239..284)
-        hoveredCancel = (x in 969..1044 && y in 349..394)
+        hoveredApply = (x in 875..936 && y in 220..260)
+        hoveredCancel = (x in 865..926 && y in 320..360)
 
     }
 
-    override fun dragMouse(x: Int, y: Int) {
+    override fun dragMouse(x: Int, y: Int) {}
+
+    override fun mousePressed(x: Int, y: Int) {}
+
+    override fun keyReleased(char: Char, keyCode: Int) {
         for (widget in widgets) {
-            widget.dragMouse(x, y)
+            widget.keyReleased(char, keyCode)
         }
     }
-
-    override fun mousePressed(x: Int, y: Int) {
-        for (widget in widgets) {
-            widget.mousePressed(x, y)
-        }
-    }
-
-    override fun keyReleased(char: Char, keyCode: Int) {}
 
 }

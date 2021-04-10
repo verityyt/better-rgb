@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation("io.gitlab.mguimard:openrgb-client:1.12")
+    implementation("com.googlecode.json-simple:json-simple:1.1")
 
     implementation(kotlin("stdlib"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")

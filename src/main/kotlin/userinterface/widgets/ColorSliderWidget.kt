@@ -113,4 +113,6 @@ class ColorSliderWidget(
         dragging = x in (this.x + dotX)..((this.x + dotX) + 510) && y in (this.y + 4 - 20)..(this.y + 23 - 20)
     }
 
+    override fun keyReleased(char: Char, keyCode: Int) {}
+
 }

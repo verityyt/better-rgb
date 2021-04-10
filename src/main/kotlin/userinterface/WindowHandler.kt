@@ -1,5 +1,6 @@
 package userinterface
 
+import userinterface.listener.KeyListener
 import utils.setOpacity
 import userinterface.listener.MouseListener
 import userinterface.listener.MouseMotionListener
@@ -176,6 +177,7 @@ object WindowHandler {
 
         frame.addMouseListener(MouseListener())
         frame.addMouseMotionListener(MouseMotionListener())
+        frame.addKeyListener(KeyListener())
 
         frame.title = "BetterRGB | Home"
         frame.iconImage =
