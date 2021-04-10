@@ -8,8 +8,8 @@ import userinterface.SystemTray
 
 object BetterRGB {
 
-    var version = "1.0"
-    var buildDate = "4/9/2021"
+    var version = "1.1"
+    var buildDate = "4/10/2021"
 
     @JvmStatic
     fun main(args: Array<String>) {
