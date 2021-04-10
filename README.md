@@ -6,10 +6,10 @@ Open source rgb control software based on [OpenRGB](https://gitlab.com/CalcProgr
 ### Window Installation
 Just download and run the setup file from the **[latest Release](https://github.com/verityyt/better-rgb/releases/latest)**.
 
-### Linux Installation
+### Linux / MacOS Installation
 Download the **multi_platform.zip** from the **[latest Release](https://github.com/verityyt/better-rgb/releases/latest)** on GitHub,
 
-and simple run the **BetterRGB.jar** file by double-clicking.
+extract the zip and run the **BetterRGB.jar** file by double-clicking.
 
 ### Effects
 - **Static** (1 static color)
