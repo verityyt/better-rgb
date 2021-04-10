@@ -83,7 +83,9 @@ class TextFieldWidget(
     override fun keyReleased(char: Char, keyCode: Int) {
         if (focused && allowedKeyCodes.contains(keyCode)) {
             if (keyCode == 8) {
-                content = content.substring(0, content.length - 1)
+                if(content.isNotEmpty()) {
+                    content = content.substring(0, content.length - 1)
+                }
             } else {
                 if (content.length < 36) {
                     content += char.toString()
