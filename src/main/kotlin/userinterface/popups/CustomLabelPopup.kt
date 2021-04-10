@@ -81,14 +81,14 @@ class CustomLabelPopup(
             widget.mouseClicked(x, y)
         }
 
-        if (x in 979..1039 && y in 239..284) {
+        if (x in 875..936 && y in 220..260) {
             Logger.`interface`("Clicked on \"Apply\" button open ColorPickerPopup!")
 
-            // Save
+            exec(textField.content)
             open = false
 
             WindowHandler.popup = null
-        } else if (x in 969..1044 && y in 349..394) {
+        } else if (x in 865..926 && y in 320..360) {
             Logger.`interface`("Clicked on \"Cancel\" button open ColorPickerPopup!")
 
             open = false
@@ -103,8 +103,8 @@ class CustomLabelPopup(
             widget.mouseMoved(x, y)
         }
 
-        hoveredApply = (x in 979..1039 && y in 239..284)
-        hoveredCancel = (x in 969..1044 && y in 349..394)
+        hoveredApply = (x in 875..936 && y in 220..260)
+        hoveredCancel = (x in 865..926 && y in 320..360)
 
     }
 
