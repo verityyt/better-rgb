@@ -8,6 +8,7 @@ import userinterface.*
 import utils.resetOpacity
 import utils.setOpacity
 import userinterface.popups.ColorPickerPopup
+import userinterface.popups.CustomLabelPopup
 import userinterface.popups.EffectPickerPopup
 import utils.ColorPartEnum
 import utils.Logger
@@ -32,6 +33,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
 
     /**
      * List of all zones of this device with [Rectangle]
+     *
      * **Key**: ZoneIndex
      *
      * **Value**: HashMap
@@ -72,8 +74,12 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
     private var drawZoneY = 175
 
     init {
+        updateCustomLabels()
+    }
+
+    private fun updateCustomLabels() {
         for (zoneIndex in 0 until deviceZones.size) {
-            val customName = CustomLabels.getLabel(deviceName, zoneIndex.toString())
+            val customName = CustomLabels.getLabel(deviceName, zoneIndex)
             var zoneName = if (customName == "") {
                 deviceZones[zoneIndex]!!
             } else {
@@ -119,7 +125,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
         g.drawString("$deviceName:", 175, 125)
 
         for (zoneIndex in 0 until deviceZones.size) {
-            val customName = CustomLabels.getLabel(deviceName, zoneIndex.toString())
+            val customName = CustomLabels.getLabel(deviceName, zoneIndex)
             var zoneName = if (customName == "") {
                 deviceZones[zoneIndex]!!
             } else {
@@ -242,13 +248,6 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                 drawZoneY += 50
             }
 
-            for(entry in deviceZonePosition) {
-                val rect = entry.value.second
-
-                g.color = Color.red
-                g.drawRect(rect.x, rect.y, rect.width, rect.height)
-            }
-
         }
 
         drawZoneY = 175
@@ -260,8 +259,12 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
         for (entry in deviceZonePosition) {
             val rect = entry.value.second
 
-            if (x in (rect.x)..(rect.x + rect.width) && y in (rect.y - 20)..(rect.y + rect.height)) {
+            if (x in (rect.x)..(rect.x + rect.width) && y in (rect.y - 20)..(rect.y + rect.height) && WindowHandler.popup == null) {
                 Logger.`interface`("Clicked at label of \"${entry.value.first}\"!")
+                WindowHandler.popup = CustomLabelPopup({ input: String ->
+                    CustomLabels.saveLabel(deviceName, entry.key, input)
+                    updateCustomLabels()
+                }, entry.value.first)
             }
         }
 
