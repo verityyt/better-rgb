@@ -11,12 +11,14 @@ import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.image.ImageObserver
 
-class ColorSliderWidget(
+class SliderWidget(
     private val x: Int,
     private val y: Int,
     private val color: Color,
     private val label: String,
-    oldValue: Int = 0
+    private val oldValue: Int = 0,
+    private val minValue: Int = 0,
+    private val maxValue: Int = 0
 ) : Widget() {
 
     /**
@@ -103,7 +105,7 @@ class ColorSliderWidget(
             // Updating dotX to current drag position
 
             val target = x - this.x
-            if (target <= (255 * 2) && target > 0) {
+            if (target <= (maxValue * 2) && target > minValue) {
                 dotX = target
             }
         }
