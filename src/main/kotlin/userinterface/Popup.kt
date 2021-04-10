@@ -21,4 +21,6 @@ abstract class Popup {
 
     abstract fun mousePressed(x: Int, y: Int)
 
+    abstract fun keyReleased(char: Char, keyCode: Int)
+
 }

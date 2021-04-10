@@ -131,4 +131,6 @@ class ColorPickerPopup(
         }
     }
 
+    override fun keyReleased(char: Char, keyCode: Int) {}
+
 }

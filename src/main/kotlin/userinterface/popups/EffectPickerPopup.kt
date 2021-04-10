@@ -216,4 +216,6 @@ class EffectPickerPopup(
         }
     }
 
+    override fun keyReleased(char: Char, keyCode: Int) {}
+
 }
