@@ -2,6 +2,7 @@ package userinterface
 
 import org.json.simple.JSONObject
 import org.json.simple.parser.JSONParser
+import utils.Logger
 import java.io.File
 import java.nio.file.FileSystems
 
@@ -35,6 +36,7 @@ object CustomLabels {
     }
 
     fun saveLabel(deviceName: String, zoneIndex: Int, customName: String) {
+        Logger.trace("Setting custom label for $deviceName#$zoneIndex to '$customName'")
         val json = JSONParser().parse(file.readText()) as JSONObject
 
         if (json.containsKey(deviceName)) {
@@ -48,6 +50,8 @@ object CustomLabels {
         }
 
         file.writeText(json.toJSONString())
+
+        Logger.debug("Set custom label for $deviceName#$zoneIndex to '$customName'")
     }
 
 }
