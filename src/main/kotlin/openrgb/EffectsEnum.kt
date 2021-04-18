@@ -11,6 +11,7 @@ enum class EffectsEnum(
     COLOR_GRADIENT("Color Gradient", true, true, true),
     RAINBOW_WAVE("Rainbow Wave", false, false, true),
     BREATHING("Breathing", true, false, true),
-    FLASHING("Flashing", true, true, true)
+    FLASHING("Flashing", true, true, true),
+    SCREEN_COLOR("Screen Color", false, false, true)
 
 }
