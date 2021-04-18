@@ -59,7 +59,7 @@ class EffectPickerPopup(
 
         if (open) {
             g.color = Color.decode("#555555")
-            g.fillRoundRect(250 - 50, 220 + 30, 850, 250, 25, 25)
+            g.fillRoundRect(250 - 50, 220 + 30, 850, 300, 25, 25)
 
             if (effect.needSecondary) {
                 g2.resetOpacity()
@@ -126,10 +126,21 @@ class EffectPickerPopup(
 
             // Effects
 
+            var curEffectIndex = 0
+
             for (effect in EffectsEnum.values()) {
                 g2.resetOpacity()
 
-                // Text
+                val y = if(curEffectIndex < 5) {
+                    450
+                }else {
+                    500
+                }
+
+                if(curEffectIndex >= 5) {
+                    drawEffectX = 220
+                }
+                val x = drawEffectX
 
                 g.color = if (effect == this.effect) {
                     ColorPalette.foreground
@@ -139,9 +150,9 @@ class EffectPickerPopup(
 
                 val rectWidth = g.fontMetrics.stringWidth(effect.displayName) + 10
 
-                g.fillRoundRect(drawEffectX, 450, rectWidth, 35, 10, 10)
+                g.fillRoundRect(x, y, rectWidth, 35, 10, 10)
 
-                effectRects[effect] = Rectangle(drawEffectX, 450, rectWidth, 35)
+                effectRects[effect] = Rectangle(x, y, rectWidth, 35)
 
                 g.color = if (effect == this.effect) {
                     ColorPalette.background
@@ -149,9 +160,10 @@ class EffectPickerPopup(
                     ColorPalette.foreground
                 }
 
-                g.drawString(effect.displayName, drawEffectX + 5, 450 + 25)
+                g.drawString(effect.displayName, x + 5, y + 25)
 
                 drawEffectX += rectWidth + 10
+                curEffectIndex++
 
             }
 
