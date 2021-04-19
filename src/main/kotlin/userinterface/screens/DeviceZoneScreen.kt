@@ -368,10 +368,10 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                             false
                         )
                     }
-                    EffectsEnum.SCREEN_COLOR -> {
+                    EffectsEnum.SCREEN_VIS -> {
                         setEffect(
                             deviceIndex,
-                            ScreenColorEffect(speed),
+                            ScreenVisEffect(speed),
                             button,
                             false
                         )
@@ -527,8 +527,8 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                                 )
                             }
                         }
-                        EffectsEnum.SCREEN_COLOR -> {
-                            setEffect(deviceIndex, ScreenColorEffect(60), button, false)
+                        EffectsEnum.SCREEN_VIS -> {
+                            setEffect(deviceIndex, ScreenVisEffect(60), button, false)
                         }
                     }
 

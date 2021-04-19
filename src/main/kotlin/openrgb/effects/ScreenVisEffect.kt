@@ -8,7 +8,7 @@ import java.awt.Robot
 import java.awt.Toolkit
 import java.awt.image.BufferedImage
 
-class ScreenColorEffect(override val fps: Int) : Effect() {
+class ScreenVisEffect(override val fps: Int) : Effect() {
 
     /**
      * Whether the effect is a animation or not *(static)*
@@ -18,7 +18,7 @@ class ScreenColorEffect(override val fps: Int) : Effect() {
     /**
      * [EffectsEnum] of the effect
      */
-    override var enumType: EffectsEnum = EffectsEnum.SCREEN_COLOR
+    override var enumType: EffectsEnum = EffectsEnum.SCREEN_VIS
 
     override var thread = Thread {
         while (true) {
