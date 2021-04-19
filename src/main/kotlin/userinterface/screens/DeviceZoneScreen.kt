@@ -379,7 +379,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                     EffectsEnum.KEYBOARD_VIS -> {
                         setEffect(
                             deviceIndex,
-                            KeyboardEffect(
+                            KeyboardVisEffect(
                                 speed,
                                 zoneColorButton[button.zoneIndex]!!.colorHex,
                                 String.format("#%02x%02x%02x", red, green, blue)
@@ -557,11 +557,11 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                                     val endHex =
                                         String.format("#%02x%02x%02x", endColor!!.red, endColor.green, endColor.blue)
 
-                                    setEffect(deviceIndex, KeyboardEffect(60, startHex, endHex), button, true)
+                                    setEffect(deviceIndex, KeyboardVisEffect(60, startHex, endHex), button, true)
                                 } else {
                                     setEffect(
                                         deviceIndex,
-                                        KeyboardEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
+                                        KeyboardVisEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
                                         button,
                                         false
                                     )
@@ -569,7 +569,7 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                             } else {
                                 setEffect(
                                     deviceIndex,
-                                    KeyboardEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
+                                    KeyboardVisEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
                                     button,
                                     false
                                 )

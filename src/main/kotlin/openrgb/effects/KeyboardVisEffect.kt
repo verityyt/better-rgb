@@ -10,7 +10,7 @@ import java.io.InputStreamReader
 import java.net.ServerSocket
 import java.nio.file.FileSystems
 
-class KeyboardEffect(override val fps: Int, val startHex: String, val endHex: String) : Effect() {
+class KeyboardVisEffect(override val fps: Int, val startHex: String, val endHex: String) : Effect() {
 
 
     /**
