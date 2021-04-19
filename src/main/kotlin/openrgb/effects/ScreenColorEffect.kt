@@ -11,11 +11,6 @@ import java.awt.image.BufferedImage
 class ScreenColorEffect(override val fps: Int) : Effect() {
 
     /**
-     * Index of current wave
-     */
-    private var currentIndex = 0
-
-    /**
      * Whether the effect is a animation or not *(static)*
      */
     override var animation = true
