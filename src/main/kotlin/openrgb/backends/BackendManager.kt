@@ -17,10 +17,14 @@ object BackendManager {
 
     private fun startupKeyboardListener() {
         Thread {
-            val file =
-                File("files${FileSystems.getDefault().separator}backend_files${FileSystems.getDefault().separator}keyboard_listener.py")
-            Runtime.getRuntime()
-                .exec("python ${file.absolutePath}")
+            try {
+                val file =
+                    File("files${FileSystems.getDefault().separator}backend_files${FileSystems.getDefault().separator}keyboard_listener.py")
+                Runtime.getRuntime()
+                    .exec("python ${file.absolutePath}")
+            } catch (e: Exception) {
+            }
+
 
             val server = ServerSocket(6969)
             val socket = server.accept()
