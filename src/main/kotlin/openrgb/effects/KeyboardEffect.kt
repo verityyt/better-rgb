@@ -2,6 +2,7 @@ package openrgb.effects
 
 import openrgb.Effect
 import openrgb.EffectsEnum
+import openrgb.backends.BackendManager
 import java.awt.Color
 import java.io.BufferedReader
 import java.io.File
@@ -48,38 +49,48 @@ class KeyboardEffect(override val fps: Int, val startHex: String, val endHex: St
 
     override var thread = Thread {
 
-        startBackend()
-
         originalStartColor = Color.decode(startHex)
         originalEndColor = Color.decode(endHex)
 
-        colorHex = startHex
+        var old = ""
 
-    }
+        var time = 0.0
+        var holding = true
 
-    private fun startBackend() {
         Thread {
-            val file = File("files${FileSystems.getDefault().separator}backend_files${FileSystems.getDefault().separator}keyboard_listener.py")
-            Runtime.getRuntime()
-                .exec("python ${file.absolutePath}")
-
-            val server = ServerSocket(6969)
-            val socket = server.accept()
-
-            val reader = BufferedReader(InputStreamReader(socket.getInputStream()))
-
             while (true) {
-                Thread.sleep((1000 / fps).toLong())
-
-                if(reader.readLine() == "start") {
-                    colorHex = endHex
-                }else {
-                    colorHex = startHex
+                Thread.sleep(150)
+                if (holding) {
+                    time++
                 }
-
-                Thread.sleep(50)
             }
         }.start()
+
+        while (true) {
+            val input = BackendManager.keyboardListenerSignal
+
+            if (old != input) {
+                if (input == "start") {
+                    holding = true
+                    time = 0.0
+
+                    colorHex = endHex
+                } else {
+                    holding = false
+
+                    if (time < 2.0) {
+                        Thread.sleep(300)
+                    }
+
+                    colorHex = startHex
+                }
+            } else {
+                print("")
+            }
+
+            old = input
+        }
+
     }
 
 }
