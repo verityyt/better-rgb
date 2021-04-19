@@ -12,6 +12,7 @@ enum class EffectsEnum(
     RAINBOW_WAVE("Rainbow Wave", false, false, true),
     BREATHING("Breathing", true, false, true),
     FLASHING("Flashing", true, true, true),
-    SCREEN_COLOR("Screen Color", false, false, true)
+    SCREEN_COLOR("Screen Color", false, false, true),
+    KEYBOARD_VIS("Keyboard", true, true, true)
 
 }

@@ -137,7 +137,7 @@ class EffectPickerPopup(
                     500
                 }
 
-                if(curEffectIndex >= 5) {
+                if(curEffectIndex == 5) {
                     drawEffectX = 220
                 }
                 val x = drawEffectX
