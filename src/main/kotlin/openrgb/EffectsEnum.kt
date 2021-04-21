@@ -13,6 +13,6 @@ enum class EffectsEnum(
     BREATHING("Breathing", true, false, true),
     FLASHING("Flashing", true, true, true),
     SCREEN_COLOR("Screen Color", false, false, true),
-    KEYBOARD_VIS("Keyboard Visualizer", true, true, false)
+    KEYBOARD_VIS("Keyboard Visualizer (Experimental)", true, true, false)
 
 }
