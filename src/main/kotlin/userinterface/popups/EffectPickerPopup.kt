@@ -122,7 +122,7 @@ class EffectPickerPopup(
                     0.6f
                 }
             )
-            g2.drawString("Cancel", 970, 480)
+            g2.drawString("Cancel", 970, 535)
 
             // Effects
 
@@ -137,7 +137,7 @@ class EffectPickerPopup(
                     500
                 }
 
-                if(curEffectIndex >= 5) {
+                if(curEffectIndex == 5) {
                     drawEffectX = 220
                 }
                 val x = drawEffectX
@@ -190,7 +190,7 @@ class EffectPickerPopup(
             open = false
 
             WindowHandler.popup = null
-        } else if (x in 969..1044 && y in 429..534) {
+        } else if (x in 969..1044 && y in 429..589) {
             Logger.`interface`("Clicked on \"Cancel\" button open ColorPickerPopup!")
 
             open = false
@@ -223,7 +223,7 @@ class EffectPickerPopup(
         }
 
         hoveredApply = (x in 979..1039 && y in 239..284)
-        hoveredCancel = (x in 969..1044 && y in 429..534)
+        hoveredCancel = (x in 969..1044 && y in 429..589)
     }
 
     override fun dragMouse(x: Int, y: Int) {
