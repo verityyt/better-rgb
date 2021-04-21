@@ -17,6 +17,8 @@ extract the zip and run the **BetterRGB.jar** file by double-clicking.
 - **Rainbow Wave** (Color wave through rainbow spectrum)
 - **Breathing** (1 color breathing in and out)
 - **Flashing** (1 static color with random timed and colored flashes)
+- **Screen Visualizer** (Average color of all colors on the primary screen)
+- **Keyboard Visualizer *(Experimental)*** (1 static color and colored while pressing/holding a key)
 
 ### Requirements
 - **OpenRGB** has to be installed
