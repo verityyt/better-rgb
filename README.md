@@ -19,6 +19,7 @@ extract the zip and run the **BetterRGB.jar** file by double-clicking.
 - **Flashing** (1 static color with random timed and colored flashes)
 - **Screen Visualizer** (Average color of all colors on the primary screen)
 - **Keyboard Visualizer *(Experimental)*** (1 static color and colored while pressing/holding a key)
+- **Mouse Visualizer *(Experimental)*** (1 static color and colored on mouse click)
 
 ### Requirements
 - **OpenRGB** has to be installed
