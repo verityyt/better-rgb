@@ -13,6 +13,7 @@ enum class EffectsEnum(
     BREATHING("Breathing", true, false, true),
     FLASHING("Flashing", true, true, true),
     SCREEN_VIS("Screen Visualizer", false, false, true),
-    KEYBOARD_VIS("Keyboard Visualizer (Experimental)", true, true, false)
+    KEYBOARD_VIS("Keyboard Visualizer !", true, true, false),
+    MOUSE_VIS("Mouse Visualizer !", true, true, false)
 
 }

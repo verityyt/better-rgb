@@ -388,6 +388,18 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                             false
                         )
                     }
+                    EffectsEnum.MOUSE_VIS -> {
+                        setEffect(
+                            deviceIndex,
+                            MouseVisEffect(
+                                speed,
+                                zoneColorButton[button.zoneIndex]!!.colorHex,
+                                String.format("#%02x%02x%02x", red, green, blue)
+                            ),
+                            button,
+                            false
+                        )
+                    }
                 }
             },
             zoneEffects[button.zoneIndex] ?: EffectsEnum.STATIC,
@@ -570,6 +582,39 @@ class DeviceZoneScreen(private val deviceName: String, private val deviceIndex: 
                                 setEffect(
                                     deviceIndex,
                                     KeyboardVisEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
+                                    button,
+                                    false
+                                )
+                            }
+                        }
+                        EffectsEnum.MOUSE_VIS -> {
+                            if (zoneCurrentEffect.containsKey(button.zoneIndex)) {
+                                val effect = zoneCurrentEffect[button.zoneIndex]!!
+
+                                if (effect.animation && (effect.endColor != null)) {
+                                    val startHex = String.format(
+                                        "#%02x%02x%02x",
+                                        red,
+                                        green,
+                                        blue
+                                    ) // New primary color from color picker
+                                    val endColor = effect.endColor // Old secondary color from old effect
+                                    val endHex =
+                                        String.format("#%02x%02x%02x", endColor!!.red, endColor.green, endColor.blue)
+
+                                    setEffect(deviceIndex, MouseVisEffect(60, startHex, endHex), button, true)
+                                } else {
+                                    setEffect(
+                                        deviceIndex,
+                                        MouseVisEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
+                                        button,
+                                        false
+                                    )
+                                }
+                            } else {
+                                setEffect(
+                                    deviceIndex,
+                                    MouseVisEffect(60, String.format("#%02x%02x%02x", red, green, blue), "#FFFFFF"),
                                     button,
                                     false
                                 )
